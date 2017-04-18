@@ -47,3 +47,14 @@ jobs:
     trigger: true
   - task: test-query
     file: source-code/ci/tasks/unit-test-query-side.yml
+
+- name: package-command-side
+  public: true
+  plan:
+  - get: source-code
+    trigger: true
+    passed: [unit-test-common,unit-test-command]
+  - get: timer
+    trigger: true
+  - task: package-command
+    file: source-code/ci/tasks/package-command-side.yml
