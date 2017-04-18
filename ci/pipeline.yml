@@ -27,3 +27,23 @@ jobs:
     trigger: true
   - task: test-common
     file: source-code/ci/tasks/unit-test-common.yml
+
+- name: unit-test-command
+  public: true
+  plan:
+  - get: source-code
+    trigger: true
+  - get: timer
+    trigger: true
+  - task: test-command
+    file: source-code/ci/tasks/unit-test-command-side.yml
+
+- name: unit-test-command
+  public: true
+  plan:
+  - get: source-code
+    trigger: true
+  - get: timer
+    trigger: true
+  - task: test-command
+    file: source-code/ci/tasks/unit-test-query-side.yml
