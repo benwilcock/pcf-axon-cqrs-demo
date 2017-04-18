@@ -2,7 +2,7 @@
 
 set -ex
 
-pushd pcf-springboot-demo-source
+pushd source-code
   echo "Fetching Dependencies & Building Code..."
   ./gradlew assemble > /dev/null
 
