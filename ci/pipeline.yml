@@ -1,0 +1,23 @@
+---
+resource_types:
+- name: slack-notification
+  type: docker-image
+  source:
+    repository: cfcommunity/slack-notification-resource
+    tag: latest
+
+resources:
+- name: source-code
+  type: git
+  source:
+    uri: https://github.com/benwilcock/pcf-axon-cqrs-demo
+    branch: master
+
+jobs:
+- name: unit-test-common
+  public: true
+  plan:
+  - get: source-code
+    trigger: true
+  - task: test-common
+    file: source-code/ci/tasks/unit-test-common.yml
