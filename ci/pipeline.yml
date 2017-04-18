@@ -56,5 +56,18 @@ jobs:
     passed: [unit-test-common,unit-test-command]
   - get: timer
     trigger: true
+    passed: [unit-test-common,unit-test-command]
   - task: package-command
     file: source-code/ci/tasks/package-command-side.yml
+
+- name: package-query-side
+  public: true
+  plan:
+  - get: source-code
+    trigger: true
+    passed: [unit-test-common,unit-test-query]
+  - get: timer
+    trigger: true
+    passed: [unit-test-common,unit-test-query]
+  - task: package-command
+    file: source-code/ci/tasks/package-query-side.yml
