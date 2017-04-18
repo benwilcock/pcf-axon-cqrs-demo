@@ -4,10 +4,10 @@ set -ex
 
 pushd source-code
   echo "Fetching Dependencies & Building Code..."
-  ./gradlew assemble > /dev/null
+  ./gradlew common-api:assemble > /dev/null
 
   echo "Running Tests..."
-  ./gradlew test
+  ./gradlew common-api:test
 popd
 
 exit 0

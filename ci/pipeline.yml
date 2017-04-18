@@ -13,11 +13,17 @@ resources:
     uri: https://github.com/benwilcock/pcf-axon-cqrs-demo
     branch: master
 
+- name: timer
+  type: time
+  source: {interval: 1h}
+
 jobs:
 - name: unit-test-common
   public: true
   plan:
   - get: source-code
+    trigger: true
+  - get: timer
     trigger: true
   - task: test-common
     file: source-code/ci/tasks/unit-test-common.yml
