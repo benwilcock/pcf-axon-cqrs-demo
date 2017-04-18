@@ -1,0 +1,22 @@
+subprojects {
+
+  buildscript {
+      repositories {
+          jcenter()
+      }
+      
+      dependencies {
+        //none
+      }
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        jcenter()
+    }
+}
