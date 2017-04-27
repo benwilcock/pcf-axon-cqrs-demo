@@ -1,0 +1,8 @@
+applications:
+- name: command-side
+  memory: 1G
+  disk_quota: 2G
+  path: build/libs/command-side-0.0.1-SNAPSHOT.jar
+  services:
+    - mysql
+    - rabbit

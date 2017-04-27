@@ -17,6 +17,15 @@ resources:
   type: time
   source: {interval: 1h}
 
+- name: push-to-pcf
+  type: cf
+  source:
+    api: {{cf-endpoint}}
+    username: {{cf-user}}
+    password: {{cf-password}}
+    organization: {{cf-org}}
+    space: {{cf-space}}
+
 jobs:
 - name: unit-test-common
   public: true
@@ -33,8 +42,10 @@ jobs:
   plan:
   - get: source-code
     trigger: true
+    passed: [unit-test-common]
   - get: timer
     trigger: true
+    passed: [unit-test-common]
   - task: test-command
     file: source-code/ci/tasks/unit-test-command-side.yml
 
@@ -43,8 +54,10 @@ jobs:
   plan:
   - get: source-code
     trigger: true
+    passed: [unit-test-common]
   - get: timer
     trigger: true
+    passed: [unit-test-common]
   - task: test-query
     file: source-code/ci/tasks/unit-test-query-side.yml
 
@@ -53,21 +66,40 @@ jobs:
   plan:
   - get: source-code
     trigger: true
-    passed: [unit-test-common,unit-test-command]
+    passed: [unit-test-command]
   - get: timer
     trigger: true
-    passed: [unit-test-common,unit-test-command]
+    passed: [unit-test-command]
   - task: package-command
     file: source-code/ci/tasks/package-command-side.yml
+  - put: push-to-pcf
+    params:
+      manifest: source-code/command-side/manifest.yml
+      path: package-output/pcf-command-side.jar
 
 - name: package-query-side
   public: true
   plan:
   - get: source-code
     trigger: true
-    passed: [unit-test-common,unit-test-query]
+    passed: [unit-test-query]
   - get: timer
     trigger: true
-    passed: [unit-test-common,unit-test-query]
+    passed: [unit-test-query]
   - task: package-command
     file: source-code/ci/tasks/package-query-side.yml
+
+
+- name: smoke-test-command-side
+  public: true
+  plan:
+  - get: source-code
+    trigger: true
+    passed: [package-command-side]
+  - get: timer
+    trigger: true
+    passed: [package-command-side]
+  - task: smoke-test-command-side
+    file: source-code/ci/tasks/smoke-test-command-side.yml
+    params:
+      URL: {{cf-app-url}}
