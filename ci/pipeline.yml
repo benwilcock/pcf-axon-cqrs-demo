@@ -25,7 +25,7 @@ resources:
     password: {{cf-password}}
     organization: {{cf-org}}
     space: {{cf-space}}
-    skip_cert_check: {{cf-skip-ssl}}
+    skip_cert_check: true
 
 jobs:
 - name: unit-test-common
