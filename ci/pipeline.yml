@@ -103,4 +103,4 @@ jobs:
   - task: smoke-test-command-side
     file: source-code/ci/tasks/smoke-test-command-side.yml
     params:
-      URL: {{cf-app-url}}
+      URL: {{cf-cmd-app-url}}
