@@ -1,4 +1,33 @@
 ---
+jobs:
+- name: build-command-side
+  public: true
+  plan:
+  - get: source-code
+    trigger: true
+  - get: timer
+    trigger: true
+  - task: package-command-side
+    file: source-code/ci/tasks/build-command-side.yml
+  - put: push-to-pcf
+    params:
+      manifest: source-code/command-side/manifest.yml
+      path: package-output/pcf-command-side.jar
+
+- name: smoke-test-command-side
+  public: true
+  plan:
+  - get: source-code
+    trigger: true
+    passed: [build-command-side]
+  - get: timer
+    trigger: true
+    passed: [build-command-side]
+  - task: smoke-test-command-side
+    file: source-code/ci/tasks/smoke-test-command-side.yml
+    params:
+      URL: {{cf-cmd-app-url}}
+
 resource_types:
 - name: slack-notification
   type: docker-image
@@ -26,47 +55,3 @@ resources:
     organization: {{cf-org}}
     space: {{cf-space}}
     skip_cert_check: true
-
-jobs:
-- name: unit-test-common
-  public: true
-  plan:
-  - get: source-code
-    trigger: true
-  - get: timer
-    trigger: true
-  - task: test-common
-    file: source-code/ci/tasks/unit-test-common.yml
-
-- name: build-command-side
-  public: true
-  plan:
-  - get: source-code
-    trigger: true
-    passed: [unit-test-common]
-  - get: timer
-    trigger: true
-    passed: [unit-test-common]
-  - task: test-command-side
-    file: source-code/ci/tasks/unit-test-command-side.yml
-  - task: package-command-side
-    file: source-code/ci/tasks/package-command-side.yml
-  - put: push-to-pcf
-    params:
-      manifest: source-code/command-side/manifest.yml
-      path: package-output/pcf-command-side.jar
-
-
-- name: smoke-test-command-side
-  public: true
-  plan:
-  - get: source-code
-    trigger: true
-    passed: [build-command-side]
-  - get: timer
-    trigger: true
-    passed: [build-command-side]
-  - task: smoke-test-command-side
-    file: source-code/ci/tasks/smoke-test-command-side.yml
-    params:
-      URL: {{cf-cmd-app-url}}
