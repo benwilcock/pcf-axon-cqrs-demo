@@ -38,7 +38,7 @@ jobs:
   - task: test-common
     file: source-code/ci/tasks/unit-test-common.yml
 
-- name: unit-test-command
+- name: build-command-side
   public: true
   plan:
   - get: source-code
@@ -47,48 +47,14 @@ jobs:
   - get: timer
     trigger: true
     passed: [unit-test-common]
-  - task: test-command
+  - task: test-command-side
     file: source-code/ci/tasks/unit-test-command-side.yml
-
-- name: unit-test-query
-  public: true
-  plan:
-  - get: source-code
-    trigger: true
-    passed: [unit-test-common]
-  - get: timer
-    trigger: true
-    passed: [unit-test-common]
-  - task: test-query
-    file: source-code/ci/tasks/unit-test-query-side.yml
-
-- name: package-command-side
-  public: true
-  plan:
-  - get: source-code
-    trigger: true
-    passed: [unit-test-command]
-  - get: timer
-    trigger: true
-    passed: [unit-test-command]
-  - task: package-command
+  - task: package-command-side
     file: source-code/ci/tasks/package-command-side.yml
   - put: push-to-pcf
     params:
       manifest: source-code/command-side/manifest.yml
       path: package-output/pcf-command-side.jar
-
-- name: package-query-side
-  public: true
-  plan:
-  - get: source-code
-    trigger: true
-    passed: [unit-test-query]
-  - get: timer
-    trigger: true
-    passed: [unit-test-query]
-  - task: package-command
-    file: source-code/ci/tasks/package-query-side.yml
 
 
 - name: smoke-test-command-side
@@ -96,10 +62,10 @@ jobs:
   plan:
   - get: source-code
     trigger: true
-    passed: [package-command-side]
+    passed: [build-command-side]
   - get: timer
     trigger: true
-    passed: [package-command-side]
+    passed: [build-command-side]
   - task: smoke-test-command-side
     file: source-code/ci/tasks/smoke-test-command-side.yml
     params:

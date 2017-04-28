@@ -21,6 +21,10 @@ repositories {
 }
 
 dependencies {
+
+    // Bounded Context DRY files...
+    compile project(':common-api')
+
 	// Spring Web
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
