@@ -23,7 +23,7 @@ Font Segoe UI-->
 
 <div class="w3-row w3-lime">
     <div class="w3-container w3-center w3-dark-teal" id="title">
-        <H2>Spring Boot Application</H2>
+        <H2 th:text="'I am: ' + ${@environment.getProperty('spring.application.name')}"/>
     </div>
 </div>
 
@@ -34,7 +34,7 @@ Font Segoe UI-->
             <h3>Source Code</h3>
         </div>
         <div class="w3-center">
-            <p th:text="'Name: ' + ${@environment.getProperty('spring.application.name')}"/>
+            <p th:text="'Application Name: ' + ${@environment.getProperty('spring.application.name')}"/>
             <p th:each="activeprofile : ${@environment.getActiveProfiles()}"  th:text="'Active Config Profile: '+${activeprofile}"/>
             <p th:text="'Build Version: ' + ${@buildProperties.getVersion()}"/>
             <p th:text="'Build Date: ' + ${@buildProperties.getTime()}"/>
