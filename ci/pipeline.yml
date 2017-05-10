@@ -27,6 +27,10 @@ jobs:
     file: source-code/ci/tasks/smoke-test-command-side.yml
     params:
       URL: {{cf-cmd-app-url}}
+  - put: slack-alert
+    params:
+      text: |
+        The http smoke test for $BUILD_PIPELINE_NAME.$BUILD_JOB_NAME has passed!
 
 resource_types:
 - name: slack-notification
@@ -55,3 +59,9 @@ resources:
     organization: {{cf-org}}
     space: {{cf-space}}
     skip_cert_check: true
+
+- name: slack-alert
+  type: slack-notification
+  source:
+    url: {{webhook}}
+    insecure: true

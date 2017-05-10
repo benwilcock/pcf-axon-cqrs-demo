@@ -13,10 +13,10 @@ dependencyManagement {
     }
 }
 
-//jar {
-//    baseName = 'product-command-side'
-//    archiveName = 'product-command-side.jar'
-//}
+jar {
+    baseName = 'pcf-axon-cqrs-demo-command-side'
+    archiveName = 'pcf-axon-cqrs-demo-command-side.jar'
+}
 
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
