@@ -6,3 +6,5 @@ applications:
   services:
     - mysql
     - rabbit
+    - config
+    - registry
