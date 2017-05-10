@@ -48,7 +48,7 @@ resources:
 
 - name: timer
   type: time
-  source: {interval: 1h}
+  source: {interval: 24h}
 
 - name: push-to-pcf
   type: cf
