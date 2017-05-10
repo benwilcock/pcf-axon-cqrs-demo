@@ -12,7 +12,7 @@ jobs:
   - put: push-to-pcf
     params:
       manifest: source-code/command-side/manifest.yml
-      path: package-output/pcf-command-side.jar
+      path: package-output/pcf-axon-cqrs-demo-command-side.jar
 
 - name: smoke-test-command-side
   public: true
@@ -58,7 +58,7 @@ resources:
     password: {{cf-password}}
     organization: {{cf-org}}
     space: {{cf-space}}
-    skip_cert_check: true
+    skip_cert_check: false
 
 - name: slack-alert
   type: slack-notification
