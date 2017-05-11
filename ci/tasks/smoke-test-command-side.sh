@@ -59,4 +59,34 @@ else
     exit 1
 fi
 
+# Make sure the homepage shows there is a Config Service bound...
+
+if curl -s "$URL" | grep "Config Server"
+then
+    echo "The website [$URL] shows 'Config' (as expected)."
+else
+    echo "Error. Not showing 'Config' on [$URL]"
+    exit 1
+fi
+
+# Make sure the homepage shows there is a Registry Service bound...
+
+if curl -s "$URL" | grep "Service Registry"
+then
+    echo "The website [$URL] shows 'Registry' (as expected)."
+else
+    echo "Error. Not showing 'Registry' on [$URL]"
+    exit 1
+fi
+
+# Make sure on the homepage the host name is set correctly - this means Config server integration is OK
+
+if curl -s "$URL" | grep "Your host today was: Ben"
+then
+    echo -e "\e[42mThe page [$URL] shows 'Your host today was: Ben' (as expected, Spring Config Server integration is working).\e[0m"
+else
+    echo -e "\e[41mError. Not showing 'Your host today was: Ben' on [$URL] - Integration of Spring Config Server has regressed or failed...\e[0m"
+    exit 1
+fi
+
 exit 0
