@@ -86,7 +86,7 @@ fi
 
 if curl -s "$URL/dash" | grep "Your host today was: Ben"
 then
-    echo -e "\e[32mThe page [$URL/dash] shows 'Your host today was: Ben' (as expected, Spring Config Server integration is working).\e[0m"
+    echo -e "The page [$URL/dash] shows 'Your host today was: Ben' (as expected, Spring Config Server integration is working)."
 else
     echo -e "\e[31mError. Not showing 'Your host today was: Ben' on [$URL/dash] - Integration of Spring Config Server has regressed or failed...\e[0m"
     exit 1
