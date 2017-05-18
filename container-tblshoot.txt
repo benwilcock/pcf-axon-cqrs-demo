@@ -1,0 +1,15 @@
+1cc3ea31-6e63-4120-6931-28c3949a1715  de129b16-b966-457b-b232-07e6a70569a5  none                   none                     none  none    check  none                     n/a
+1e99058b-afac-440e-7311-14baf4b5d526  942f4cc7-9f55-4674-8536-7b3dfdaefd6d  none                   none                     none  none    check  none                     n/a
+32998b14-c734-4382-4f72-0f7a69503e05  86092da6-4856-467e-8f14-2ecf43ce2df7  none                   none                     none  none    check  none                     n/a
+350b9fa1-da5b-48ff-7e4d-fd36b0e77f00  2617540a-0bc2-4caa-8f68-6502b42a6652  bw-pcf-axon-cqrs-demo  build-command-side       21    127277  task   package-command-side     n/a
+8004a818-3d93-4341-698a-e8483c646232  e5308df9-72e3-467c-afc9-45800dc8bce3  none                   none                     none  none    check  none                     n/a
+89140625-08d7-4289-6f04-37cbd6878068  dc39b29d-8e2e-4e4a-b8fb-8003eb75d376  none                   none                     none  none    check  none                     n/a
+94969af1-2252-41ac-62c9-449a6e9285b4  2617540a-0bc2-4caa-8f68-6502b42a6652  none                   none                     none  none    check  none                     n/a
+9732cfeb-4c66-4f84-4ff2-bb1149d51b33  1127d957-46b1-4851-8a51-fdb51bcd1c51  none                   none                     none  none    check  none                     n/a
+9c5d50d4-4c50-4503-7c8e-054576675b6c  e5308df9-72e3-467c-afc9-45800dc8bce3  none                   none                     none  none    check  none                     n/a
+a7ade67a-329c-4b02-5f07-cbaf1c9a26ad  1127d957-46b1-4851-8a51-fdb51bcd1c51  none                   none                     none  none    check  none                     n/a
+b0311e6b-de59-4113-51f1-3b9c9599ac15  942f4cc7-9f55-4674-8536-7b3dfdaefd6d  bw-pcf-axon-cqrs-demo  smoke-test-command-side  14    127276  task   smoke-test-command-side  n/a
+c961646e-43ff-4fe4-55e6-30f676d7a3eb  d4129aa3-9d54-4a2b-abaa-0b04cc541f8a  none                   none                     none  none    check  none                     n/a
+d7bf7cdc-3cfb-406c-5345-b618ab837c3a  efcf2b2f-7b0d-4d38-bcd2-bc27e5fffb16  none                   none                     none  none    check  none                     n/a
+d838b3ef-f729-442e-7bb8-df747d66c192  dc39b29d-8e2e-4e4a-b8fb-8003eb75d376  none                   none                     none  none    check  none                     n/a
+eb935c51-bf24-48f2-5203-682b764485e9  86092da6-4856-467e-8f14-2ecf43ce2df7  none                   none                     none  none    check  none                     n/a

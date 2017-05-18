@@ -22,7 +22,8 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
-    jcenter()
+    //jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -42,6 +43,8 @@ dependencies {
 
     // Spring Cloud
     compile('org.springframework.cloud:spring-cloud-starter-sleuth')
+    // compile('org.springframework.cloud:spring-cloud-stream-binder-rabbit')
+    // compile('org.springframework.cloud:spring-cloud-sleuth-zipkin-stream')
     compile("io.pivotal.spring.cloud:spring-cloud-services-starter-config-client")
     compile("io.pivotal.spring.cloud:spring-cloud-services-starter-service-registry")
 

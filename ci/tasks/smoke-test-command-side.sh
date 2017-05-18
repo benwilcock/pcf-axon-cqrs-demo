@@ -4,9 +4,12 @@ apt-get update && apt-get install -y curl --allow-unauthenticated
 
 set -ex
 
-if [ -z $URL ]; then
+if [ -z $URL ];
+then
   echo -e "\e[31mThe URL to test has not been set."
   exit 1
+else
+  echo -e "The base URL for this smoke test is: \e[32m $URL \e[0m"
 fi
 
 # Make sure the homepage shows...
@@ -41,51 +44,51 @@ fi
 
 # Make sure the homepage shows there is a DataBase Service bound...
 
-if curl -s "$URL" | grep "MySQL"
+if curl -s "$URL/dash" | grep "MySQL"
 then
-    echo "The website [$URL] shows 'MySQL' (as expected)."
+    echo "The website [$URL/dash] shows 'MySQL' (as expected)."
 else
-    echo -e "\e[31mError. Not showing 'MySQL' on [$URL]"
+    echo -e "\e[31mError. Not showing 'MySQL' on [$URL/dash]"
     exit 1
 fi
 
 # Make sure the homepage shows there is a Messaging Service bound...
 
-if curl -s "$URL" | grep "Rabbit MQ"
+if curl -s "$URL/dash" | grep "Rabbit MQ"
 then
-    echo "The website [$URL] shows 'Rabbit MQ' (as expected)."
+    echo "The website [$URL/dash] shows 'Rabbit MQ' (as expected)."
 else
-    echo -e "\e[31mError. Not showing 'Rabbit MQ' on [$URL]"
+    echo -e "\e[31mError. Not showing 'Rabbit MQ' on [$URL/dash]"
     exit 1
 fi
 
 # Make sure the homepage shows there is a Config Service bound...
 
-if curl -s "$URL" | grep "Config Server"
+if curl -s "$URL/dash" | grep "Config Server"
 then
-    echo "The website [$URL] shows 'Config' (as expected)."
+    echo "The website [$URL/dash] shows 'Config' (as expected)."
 else
-    echo -e "\e[31mError. Not showing 'Config' on [$URL]"
+    echo -e "\e[31mError. Not showing 'Config' on [$URL/dash]"
     exit 1
 fi
 
 # Make sure the homepage shows there is a Registry Service bound...
 
-if curl -s "$URL" | grep "Service Registry"
+if curl -s "$URL/dash" | grep "Service Registry"
 then
-    echo "The website [$URL] shows 'Registry' (as expected)."
+    echo "The website [$URL/dash] shows 'Registry' (as expected)."
 else
-    echo -e "\e[31mError. Not showing 'Registry' on [$URL]"
+    echo -e "\e[31mError. Not showing 'Registry' on [$URL/dash]"
     exit 1
 fi
 
 # Make sure on the homepage the host name is set correctly - this means Config server integration is OK
 
-if curl -s "$URL" | grep "Your host today was: Ben"
+if curl -s "$URL/dash" | grep "Your host today was: Ben"
 then
-    echo -e "\e[32mThe page [$URL] shows 'Your host today was: Ben' (as expected, Spring Config Server integration is working).\e[0m"
+    echo -e "\e[32mThe page [$URL/dash] shows 'Your host today was: Ben' (as expected, Spring Config Server integration is working).\e[0m"
 else
-    echo -e "\e[31mError. Not showing 'Your host today was: Ben' on [$URL] - Integration of Spring Config Server has regressed or failed...\e[0m"
+    echo -e "\e[31mError. Not showing 'Your host today was: Ben' on [$URL/dash] - Integration of Spring Config Server has regressed or failed...\e[0m"
     exit 1
 fi
 

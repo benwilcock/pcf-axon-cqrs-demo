@@ -1,7 +1,5 @@
 applications:
 - name: pcf-axon-cqrs-demo-command-side
-  memory: 1G
-  disk_quota: 2G
   path: build/libs/pcf-axon-cqrs-demo-command-side.jar
   services:
     - mysql
