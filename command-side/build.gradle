@@ -22,7 +22,7 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
-    //jcenter()
+    //jcenter() was really slow on the 18-05-2017 - 50 min on wings.
     mavenCentral()
 }
 
