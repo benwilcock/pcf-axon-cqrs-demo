@@ -30,7 +30,7 @@ jobs:
   - put: slack-alert
     params:
       text: |
-        The http smoke test for $BUILD_PIPELINE_NAME.$BUILD_JOB_NAME has passed!
+        SMOKE TEST PASSED for Pipeline "$BUILD_PIPELINE_NAME" and Job "$BUILD_JOB_NAME"!
 
 resource_types:
 - name: slack-notification
