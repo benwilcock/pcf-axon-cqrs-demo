@@ -32,6 +32,12 @@ public class PcfSpringBootApplication {
             LOG.info("A request has been received for the Index page.");
             return "index";
         }
+
+        @GetMapping("/dash")
+        public String dash() {
+            LOG.info("A request has been received for the Application Dashboard page.");
+            return "dash";
+        }
     }
 
     @RefreshScope
