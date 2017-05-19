@@ -4,8 +4,6 @@ plugins {
     id 'org.springframework.boot' version '1.5.2.RELEASE'
 }
 
-apply plugin: 'java'
-
 dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:Camden.SR6"
@@ -20,11 +18,6 @@ jar {
 
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
-
-repositories {
-    //jcenter() was really slow on the 18-05-2017 - 50 min on wings.
-    mavenCentral()
-}
 
 dependencies {
 
@@ -41,12 +34,15 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-jdbc')
 	compile('com.h2database:h2')
 
+    // Messaging
+    compile('org.springframework.boot:spring-boot-starter-amqp')
+
     // Spring Cloud
-    compile('org.springframework.cloud:spring-cloud-starter-sleuth')
-    // compile('org.springframework.cloud:spring-cloud-stream-binder-rabbit')
-    // compile('org.springframework.cloud:spring-cloud-sleuth-zipkin-stream')
     compile("io.pivotal.spring.cloud:spring-cloud-services-starter-config-client")
     compile("io.pivotal.spring.cloud:spring-cloud-services-starter-service-registry")
+    // compile('org.springframework.cloud:spring-cloud-starter-sleuth')
+    // compile('org.springframework.cloud:spring-cloud-stream-binder-rabbit')
+    // compile('org.springframework.cloud:spring-cloud-sleuth-zipkin-stream')
 
 	// Test
 	testCompile('org.springframework.boot:spring-boot-starter-test')

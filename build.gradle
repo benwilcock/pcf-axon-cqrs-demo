@@ -2,7 +2,6 @@ subprojects {
 
   buildscript {
       repositories {
-          //jcenter()
           mavenCentral()
       }
       
@@ -18,7 +17,6 @@ subprojects {
     targetCompatibility = 1.8
 
     repositories {
-        //jcenter()
         mavenCentral()
     }
 }
