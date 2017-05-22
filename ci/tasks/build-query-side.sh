@@ -14,7 +14,7 @@ if [ $jar_count -gt 1 ]; then
   exit 1
 fi
 
-find source-code/command-side/build/libs -type f -name *.jar -exec cp "{}" package-output/pcf-axon-cqrs-demo-query-side.jar \;
+find source-code/query-side/build/libs -type f -name *.jar -exec cp "{}" package-output/pcf-axon-cqrs-demo-query-side.jar \;
 
 echo "Done packaging"
 exit 0
