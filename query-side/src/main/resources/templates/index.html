@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<title>Welcome</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="/stylesheet.css"/>
+<body class="w3-content w3-lime" style="max-width:1300px">
+
+<!-- Style from
+https://www.w3schools.com/w3css/tryw3css_templates_fifty.htm
+Font Segoe UI-->
+
+<!-- Header Row: Spring Boot Logo -->
+<div class="w3-row w3-lime">
+    <div class="w3-half w3-container w3-center w3-padding-16" id="sb-logo">
+        <img src="SpringBoot.png" width="50%" height="50%"/>
+    </div>
+    <div class="w3-half w3-container w3-center w3-padding-16" id="pcf-logo">
+        <img src="PivotalCloudFoundry.png" width="60%" height="60%"/>
+    </div>
+</div>
+
+<div class="w3-row w3-lime">
+    <div class="w3-container w3-center w3-dark-teal" id="title">
+        <H2 th:text="'I am: ' + ${@environment.getProperty('spring.application.name')}?:'No application name was found'"/>
+        <H2 th:text="'My Instance ID is: ' + ${@environment.getProperty('INSTANCE_INDEX')}?:'No instance index is available'"/>
+    </div>
+</div>
+
+</body>
+<!-- Footer -->
+<footer class="w3-container w3-black">
+    <div class="w3-row">
+        <div class="w3-half w3-center" style="min-height:32px" id="footer-left">
+            <a href="https://www.w3schools.com/w3css/default.asp" class="w3-button w3-black w3-block w3-hover-teal w3-padding-small" target="_blank">Powered by w3.css</a>
+            <a href="/stb" class="w3-text-red w3-button w3-black w3-block w3-hover-red w3-padding-small">[ KILL THIS APPLICATION INSTANCE ]</a>
+        </div>
+        <div class="w3-half w3-center" style="min-height:32px" id="footer-right">
+            <form method="POST" th:action="@{/refresh}">
+                <span th:text="'Your host today was: ' + ${@environment.getProperty('your.host.is')}" class="w3-button w3-black w3-block w3-hover-teal w3-padding-small"/>
+                <button type="submit" name="submit" value="value" class="w3-text-red w3-button w3-black w3-block w3-hover-red w3-padding-small">[ REFRESH THE CONFIG ]</button>
+            </form>
+        </div>
+    </div>
+</footer>
+</html>

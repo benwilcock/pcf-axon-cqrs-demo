@@ -1,0 +1,53 @@
+plugins {
+    id "com.gorylenko.gradle-git-properties" version "1.4.16"
+    id "io.spring.dependency-management" version "1.0.2.RELEASE"
+    id 'org.springframework.boot' version '1.5.2.RELEASE'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Camden.SR6"
+        mavenBom "io.pivotal.spring.cloud:spring-cloud-services-dependencies:1.4.1.RELEASE"
+    }
+}
+
+jar {
+    baseName = 'pcf-axon-cqrs-demo-query-side'
+    archiveName = 'pcf-axon-cqrs-demo-query-side.jar'
+}
+
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+dependencies {
+
+    // Bounded Context DRY files...
+    compile project(':common-api')
+
+	// Spring Web
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile("org.springframework.boot:spring-boot-devtools")
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+
+    // Database (Required by SCS Connector if DB is bound to app in PCF)
+	compile('org.springframework.boot:spring-boot-starter-jdbc')
+	compile('com.h2database:h2')
+
+    // Messaging
+    compile('org.springframework.boot:spring-boot-starter-amqp')
+
+    // Spring Cloud
+    compile("io.pivotal.spring.cloud:spring-cloud-services-starter-config-client")
+    compile("io.pivotal.spring.cloud:spring-cloud-services-starter-service-registry")
+    // compile('org.springframework.cloud:spring-cloud-starter-sleuth')
+    // compile('org.springframework.cloud:spring-cloud-stream-binder-rabbit')
+    // compile('org.springframework.cloud:spring-cloud-sleuth-zipkin-stream')
+
+	// Test
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+springBoot  {
+    buildInfo()
+}

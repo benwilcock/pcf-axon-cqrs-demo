@@ -14,6 +14,20 @@ jobs:
       manifest: source-code/command-side/manifest.yml
       path: package-output/pcf-axon-cqrs-demo-command-side.jar
 
+- name: build-query-side
+  public: true
+  plan:
+  - get: source-code
+    trigger: true
+  - get: timer
+    trigger: true
+  - task: package-query-side
+    file: source-code/ci/tasks/build-query-side.yml
+  - put: push-to-pcf
+    params:
+      manifest: source-code/query-side/manifest.yml
+      path: package-output/pcf-axon-cqrs-demo-query-side.jar
+
 - name: smoke-test-command-side
   public: true
   plan:
@@ -32,6 +46,24 @@ jobs:
       text: |
         SMOKE TEST PASSED for Pipeline "$BUILD_PIPELINE_NAME" and Job "$BUILD_JOB_NAME"!
 
+- name: smoke-test-query-side
+  public: true
+  plan:
+  - get: source-code
+    trigger: true
+    passed: [build-query-side]
+  - get: timer
+    trigger: true
+    passed: [build-query-side]
+  - task: smoke-test-query-side
+    file: source-code/ci/tasks/smoke-test-query-side.yml
+    params:
+      URL: {{cf-qry-app-url}}
+  - put: slack-alert
+    params:
+      text: |
+        SMOKE TEST PASSED for Pipeline "$BUILD_PIPELINE_NAME" and Job "$BUILD_JOB_NAME"!
+
 resource_types:
 - name: slack-notification
   type: docker-image
@@ -44,7 +76,7 @@ resources:
   type: git
   source:
     uri: https://github.com/benwilcock/pcf-axon-cqrs-demo
-    branch: master
+    branch: adding-qry-side
 
 - name: timer
   type: time

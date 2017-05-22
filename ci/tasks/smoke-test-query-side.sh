@@ -84,13 +84,13 @@ fi
 
 # Make sure on the homepage the host name is set correctly - this means Config server integration is OK
 
-if curl -s "$URL/dash" | grep "Your host today was: Ben"
+if curl -s "$URL/dash" | grep "Your host today was: Aurora"
 then
-    echo -e "The page [$URL/dash] shows 'Your host today was: Ben' (as expected, Spring Config Server integration is working)."
+    echo -e "The page [$URL/dash] shows 'Your host today was: Aurora' (as expected, Spring Config Server integration is working)."
 else
-    echo -e "\e[31mError. Not showing 'Your host today was: Ben' on [$URL/dash] - Integration of Spring Config Server has regressed or failed...\e[0m"
+    echo -e "\e[31mError. Not showing 'Your host today was: Aurora' on [$URL/dash] - Integration of Spring Config Server has regressed or failed...\e[0m"
     exit 1
 fi
 
-echo -e "\e[32mCOMMAND-SIDE SMOKE TEST FINISHED - ZERO ERRORS ;D "
+echo -e "\e[32mQUERY-SIDE SMOKE TEST FINISHED - ZERO ERRORS ;D "
 exit 0

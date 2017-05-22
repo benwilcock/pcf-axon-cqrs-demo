@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<title>Welcome</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="/stylesheet.css"/>
+<body class="w3-content w3-lime" style="max-width:1300px">
+
+<!-- Style from
+https://www.w3schools.com/w3css/tryw3css_templates_fifty.htm
+Font Segoe UI-->
+
+<!-- Header Row: Spring Boot Logo -->
+<div class="w3-row w3-lime">
+    <div class="w3-half w3-container w3-center w3-padding-16" id="sb-logo">
+        <img src="SpringBoot.png" width="50%" height="50%"/>
+    </div>
+    <div class="w3-half w3-container w3-center w3-padding-16" id="pcf-logo">
+        <img src="PivotalCloudFoundry.png" width="60%" height="60%"/>
+    </div>
+</div>
+
+<div class="w3-row w3-lime">
+    <div class="w3-container w3-center w3-dark-teal" id="title">
+        <H2 th:text="'I am: ' + ${@environment.getProperty('spring.application.name')}"/>
+    </div>
+</div>
+
+<!-- First Row: Application and Actuator -->
+<div class="w3-row">
+    <div class="w3-half w3-teal w3-container w3-center" style="height:600px" id="app">
+        <div class="w3-padding-32">
+            <h3>Source Code</h3>
+        </div>
+        <div class="w3-center">
+            <p th:text="'Application Name: ' + ${@environment.getProperty('spring.application.name')}"/>
+            <p th:each="activeprofile : ${@environment.getActiveProfiles()}"  th:text="'Active Config Profile: '+${activeprofile}"/>
+            <p th:text="'Build Version: ' + ${@buildProperties.getVersion()}"/>
+            <p th:text="'Build Date: ' + ${@buildProperties.getTime()}"/>
+            <p th:text="'Build Branch: ' + ${@gitProperties.getBranch()}"/>
+            <p th:text="'Build Commit Id: ' + ${@gitProperties.getCommitId()}"/>
+            <p th:text="'Internal Port: ' + ${@environment.getProperty('local.server.port')}"/>
+            <p th:text="'Operating System: ' + ${@environment.getProperty('os.name')}"/>
+            <p th:text="'Java Runtime: ' + ${@environment.getProperty('java.runtime.name')}"/>
+            <p th:text="'Java Variant: ' + ${@environment.getProperty('java.vm.name')}"/>
+            <p th:text="'Java Version: ' + ${@environment.getProperty('java.runtime.version')}"/>
+            <a href="/rest" class="w3-button w3-block w3-hover-amber w3-padding-8">[ Test REST Endpoint ]</a>
+        </div>
+    </div>
+
+    <div class="w3-half w3-green w3-container w3-center" style="height:600px" id="standard">
+        <div class="w3-padding-32">
+            <h3>Actuator Endpoints</h3>
+        </div>
+        <div class="w3-center">
+            <a href="/info" class="w3-button w3-block w3-hover-teal w3-padding-8">/Info</a>
+            <a href="/health" class="w3-button w3-block w3-hover-teal w3-padding-8">/Health</a>
+            <a href="/env" class="w3-button w3-block w3-hover-amber w3-padding-8">/Env</a>
+            <a href="/configprops" class="w3-button w3-block w3-hover-amber w3-padding-8">/ConfigProps</a>
+            <a href="/beans" class="w3-button w3-block w3-hover-amber w3-padding-8">/Beans</a>
+            <a href="/metrics" class="w3-button w3-block w3-hover-amber w3-padding-8">/Metrics</a>
+            <a href="/loggers" class="w3-button w3-block w3-hover-amber w3-padding-8">/Loggers</a>
+            <a href="/trace" class="w3-button w3-block w3-hover-amber w3-padding-8">/Trace</a>
+
+            <small class="w3-button w3-block w3-hover-amber w3-padding-8"
+               th:text="'Secured: ' + ${@environment.getProperty('management.security.enabled')}"/>
+        </div>
+    </div>
+</div>
+
+<div class="w3-row w3-lime">
+    <div class="w3-container w3-center w3-deep-purple" id="sub-title">
+        <H2>Cloud Environment</H2>
+    </div>
+</div>
+
+<!-- Second Row: Cloud and Data Services -->
+<div class="w3-row">
+    <div class="w3-half w3-purple w3-container w3-center" style="min-height:900px" id="cloud">
+        <div class="w3-padding-16">
+            <h3>Cloud Platform</h3>
+        </div>
+
+        <div th:if="${@environment.acceptsProfiles('cloud')}" class="w3-center">
+
+            <img src="PivotalCloudFoundry.png" style="width:50%" class="w3-padding-32"/>
+
+            <div class="w3-container w3-padding-32">
+                <table class="w3-table w3-center w3-card-4 w3-padding-32">
+                    <tr class="w3-white">
+                        <td class="w3-half w3-right-align">Application Name:</td>
+                        <td class="w3-half w3-left-align"><span th:text="${@environment.getProperty('vcap.application.name')}?:'not-found'"/></td>
+                    </tr>
+                    <tr class="w3-white">
+                        <td class="w3-half w3-right-align">Application Space:</td>
+                        <td class="w3-half w3-left-align"><span th:text="${@environment.getProperty('vcap.application.space_name')}?:'not-found'"/></td>
+                    </tr>
+                    <tr class="w3-white">
+                        <td class="w3-half w3-right-align">Instance GUID:</td>
+                        <td class="w3-half w3-left-align"><span th:text="${@environment.getProperty('INSTANCE_GUID')}?:'not-found'"/></td>
+                    </tr>
+                    <tr class="w3-white">
+                        <td class="w3-half w3-right-align">Instance INDEX:</td>
+                        <td class="w3-half w3-left-align"><span th:text="${@environment.getProperty('INSTANCE_INDEX')}?:'not-found'"/></td>
+                    </tr>
+                    <tr class="w3-white">
+                        <td class="w3-half w3-right-align">Memory (MB):</td>
+                        <td class="w3-half w3-left-align"><span th:text="${@environment.getProperty('vcap.application.limits.mem')}?:'not-found'"/></td>
+                    </tr>
+                    <tr class="w3-white">
+                        <td class="w3-half w3-right-align">Ephemeral Disk (MB):</td>
+                        <td class="w3-half w3-left-align"><span th:text="${@environment.getProperty('vcap.application.limits.disk')}?:'not-found'"/></td>
+                    </tr>
+                    <tr class="w3-white">
+                        <td class="w3-half w3-right-align">Application URL:</td>
+                        <td class="w3-half w3-left-align">
+                            <!--<a th:href="@{${@environment.getProperty('vcap.application.application_uris[0]')}}">-->
+                            <a th:href="@{/}">
+                                <span th:text="'https://' + ${@environment.getProperty('vcap.application.application_uris[0]')}"/>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr class="w3-white">
+                        <td class="w3-half w3-right-align">API Endpoint:</td>
+                        <td class="w3-half w3-left-align">
+                            <span th:text="${@environment.getProperty('cloud.application.cf_api')}?:'not-found'"/></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div th:unless="${@environment.acceptsProfiles('cloud')}" class="w3-center">
+            <!-- The abscence of this is TESTED FOR in the smoke test! -->
+            <p>No Cloud Platform</p>
+        </div>
+    </div>
+
+    <div class="w3-half w3-indigo w3-container w3-center" style="min-height:900px" id="cache-services">
+        <div class="w3-padding-16">
+            <h3>Attached Services</h3>
+        </div>
+
+        <div class="w3-row">
+            <div th:if="${@environment.getProperty('cloud.services.mysql.id')}" class="w3-half w3-center">
+                <img src="PcfMySql.png" width="50%" height="50%" class="w3-padding-32"/>
+                <h6>MySQL</h6>
+            </div>
+            <div th:if="${@environment.getProperty('cloud.services.redis.id')}" class="w3-half w3-center">
+                <img src="PcfRedis.png" width="50%" height="50%" class="w3-padding-32"/>
+                <h6>Redis</h6>
+            </div>
+        </div>
+        <div class="w3-row">
+            <div th:if="${@environment.getProperty('cloud.services.rabbit.id')}" class="w3-half w3-center">
+                <img src="PcfRabbitMQ.png" width="50%" height="50%" class="w3-padding-32"/>
+                <h6>Rabbit MQ</h6>
+            </div>
+            <div th:if="${@environment.getProperty('cloud.services.config.id')}" class="w3-half w3-center">
+                <img src="PcfConfigServer.png" width="50%" height="50%" class="w3-padding-32"/>
+                <h6>Config Server</h6>
+            </div>
+        </div>
+        <div class="w3-row">
+            <div th:if="${@environment.getProperty('cloud.services.registry.id')}" class="w3-half w3-center">
+                <img src="PcfRegistryServer.png" width="50%" height="50%" class="w3-padding-32"/>
+                <h6>Service Registry</h6>
+            </div>
+            <div th:if="${@environment.getProperty('cloud.services.breaker.id')}" class="w3-half w3-center">
+                <img src="PcfCircuitBreakerDashboard.png" width="50%" height="50%" class="w3-padding-32"/>
+                <h6>Circuit Breaker Dashboard</h6>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<!-- Footer -->
+<footer class="w3-container w3-black">
+    <div class="w3-row">
+        <div class="w3-half w3-center" style="min-height:32px" id="footer-left">
+            <a href="https://www.w3schools.com/w3css/default.asp" class="w3-button w3-black w3-block w3-hover-teal w3-padding-small" target="_blank">Powered by w3.css</a>
+            <a href="/stb" class="w3-text-red w3-button w3-black w3-block w3-hover-red w3-padding-small">[ KILL THIS APPLICATION INSTANCE ]</a>
+        </div>
+        <div class="w3-half w3-center" style="min-height:32px" id="footer-right">
+            <form method="POST" th:action="@{/refresh}">
+                <span th:text="'Your host today was: ' + ${@environment.getProperty('your.host.is')}" class="w3-button w3-black w3-block w3-hover-teal w3-padding-small"/>
+                <button type="submit" name="submit" value="value" class="w3-text-red w3-button w3-black w3-block w3-hover-red w3-padding-small">[ REFRESH THE CONFIG ]</button>
+            </form>
+        </div>
+    </div>
+</footer>
+</html>

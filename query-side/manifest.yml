@@ -1,0 +1,8 @@
+applications:
+- name: pcf-axon-cqrs-demo-query-side
+  path: build/libs/pcf-axon-cqrs-demo-query-side.jar
+  services:
+    - mysql
+    - rabbit
+    - config
+    - registry
