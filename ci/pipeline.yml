@@ -76,7 +76,7 @@ resources:
   type: git
   source:
     uri: https://github.com/benwilcock/pcf-axon-cqrs-demo
-    branch: adding-qry-side
+    branch: master
 
 - name: timer
   type: time
