@@ -9,6 +9,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,11 +22,11 @@ public class PcfSpringBootApplication {
     private static final Logger LOG = LoggerFactory.getLogger(PcfSpringBootApplication.class);
 
     public static void main(String[] args) {
-
         SpringApplication.run(PcfSpringBootApplication.class, args);
-        LOG.info("Starting the PCF SpringBoot Demo with Thymeleaf.");
+        LOG.info("Starting the COMMAND-SIDE PCF Axon CQRS Demo with SpringBoot.");
     }
 
+    @RefreshScope
     @Controller
     class MainController {
 
@@ -39,19 +41,35 @@ public class PcfSpringBootApplication {
             LOG.info("A request has been received for the Application Dashboard page.");
             return "dash";
         }
+
+        @GetMapping("/stb")
+        public String stb() {
+            LOG.error("Had a crisis...   :(   ", new OutOfMemoryError("Threw a fake OutOfMemory error!!!"));
+            System.exit(-1);
+            return "index";
+        }
     }
 
+
+    /**
+     * The @RestController annotation tells Spring to render the resulting string directly back to the caller.
+     * @return
+     */
     @RefreshScope
-    @org.springframework.web.bind.annotation.RestController
-    class RestController {
+    @RestController
+    class TestRestController {
 
         @Value("${spring.application.name}")
         String appName;
 
-        @Value("${your.host.is:Ben}")
+        @Value("${your.host.is:Aurora}")
         String hostName;
 
-        @GetMapping("/rest")
+        /**
+         * The @RequestMapping annotation provides “routing” information.
+         * @return
+         */
+        @RequestMapping("/rest")
         public Map<String, String> get() {
             LOG.info("A request has been received for the /rest endpoint.");
             Map<String, String> data = new HashMap<String, String>();
@@ -59,17 +77,6 @@ public class PcfSpringBootApplication {
             data.put("yourHostIs", hostName);
             LOG.debug("Returning {}.", data.toString());
             return data;
-        }
-    }
-
-    @Controller
-    class StbController {
-
-        @GetMapping("/stb")
-        public String stb() {
-            LOG.error("Had a crisis...   :(   ", new OutOfMemoryError("Threw a fake OutOfMemory error!!!"));
-            System.exit(-1);
-            return "index";
         }
     }
 }
