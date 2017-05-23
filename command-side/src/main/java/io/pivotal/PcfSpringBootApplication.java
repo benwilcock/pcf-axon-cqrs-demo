@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -25,7 +24,7 @@ import java.util.concurrent.CompletableFuture;
 
 import static org.axonframework.commandhandling.model.AggregateLifecycle.apply;
 
-@EnableDiscoveryClient
+//@EnableDiscoveryClient
 @SpringBootApplication
 public class PcfSpringBootApplication {
 
@@ -63,6 +62,7 @@ public class PcfSpringBootApplication {
 
     /**
      * The @RestController annotation tells Spring to render the resulting string directly back to the caller.
+     *
      * @return
      */
     @RefreshScope
@@ -77,6 +77,7 @@ public class PcfSpringBootApplication {
 
         /**
          * The @RequestMapping annotation provides “routing” information.
+         *
          * @return
          */
         @RequestMapping("/rest")
@@ -115,7 +116,7 @@ public class PcfSpringBootApplication {
     }
 
     @Aggregate
-    public static class Product{
+    public static class Product {
 
         @AggregateIdentifier
         String id;
@@ -125,7 +126,7 @@ public class PcfSpringBootApplication {
         }
 
         @CommandHandler
-        public Product(AddProductToCatalog cmd){
+        public Product(AddProductToCatalog cmd) {
             LOG.debug("Handling {} command: {}, {}", cmd.getClass().getSimpleName(), cmd.getId(), cmd.getName());
             Assert.hasLength(cmd.getId(), "ID should NOT be blank.");
             Assert.hasLength(cmd.getName(), "Name should NOT be blank.");
@@ -134,7 +135,7 @@ public class PcfSpringBootApplication {
         }
 
         @EventSourcingHandler
-        public void on(ProductAddedEvent evnt){
+        public void on(ProductAddedEvent evnt) {
             LOG.debug("Handling {} event: {}, {}", evnt.getClass().getSimpleName(), evnt.getId(), evnt.getName());
             this.id = evnt.getId();
             this.name = evnt.getName();
