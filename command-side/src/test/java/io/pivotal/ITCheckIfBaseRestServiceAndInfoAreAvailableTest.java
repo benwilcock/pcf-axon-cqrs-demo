@@ -36,9 +36,9 @@ import static org.assertj.core.api.BDDAssertions.then;
  * @author Dave Syer, Ben Wilcock
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = PcfSpringBootApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = PcfAxonCqrsCommandSideApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {"management.port=0", "your.host.is=Test"})
-public class PcfSpringBootApplicationLocalIntegrationTests {
+public class ITCheckIfBaseRestServiceAndInfoAreAvailableTest {
 
     @LocalServerPort
     private int port;

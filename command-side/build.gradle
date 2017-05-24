@@ -50,6 +50,7 @@ dependencies {
 
 	// Test
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.axonframework:axon-test:3.0.4')
 }
 
 springBoot  {

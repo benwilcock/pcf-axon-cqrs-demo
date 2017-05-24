@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AmqpNotificationConfig {
+public class AmqpEventPublicationConfig {
 
 
     @Value("${axon.amqp.exchange:CatalogEvents}")
@@ -48,6 +48,4 @@ public class AmqpNotificationConfig {
         amqpAdmin.declareQueue(queue);
         amqpAdmin.declareBinding(binding);
     }
-
-
 }
