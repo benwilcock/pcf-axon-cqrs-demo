@@ -41,13 +41,13 @@ fi
 # Begin the Integration-testing...
 
 export UUID=`uuid`
-export PRODUCT_ID=`curl -s -H "Content-Type:application/json" -d "{\"id\":\"${UUID}\", \"name\":\"test-${UUID}\"}" ${URL}/add`
+export PRODUCT_ID=`curl -s -H "Content-Type:application/json" -d "{\"id\":\"${UUID}\", \"name\":\"test-${UUID}\"}" ${cmdURL}/add`
 
 if [ "$PRODUCT_ID" = "$UUID" ]
 then
-    echo -e "The command [$URL/add] for Product $UUID returned ID $PRODUCT_ID (as expected)."
+    echo -e "The command [$cmdURL/add] for Product $UUID returned ID $PRODUCT_ID (as expected)."
 else
-    echo -e "\e[31mError. Product ID $UUID wasn't returned as expected (got $PRODUCT_ID) \e[0m"
+    echo -e "\e[31mError. The Product ID $UUID wasn't returned as expected (got $PRODUCT_ID)! \e[0m"
     exit 1
 fi
 
