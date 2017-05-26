@@ -22,87 +22,27 @@ fi
 
 # Make sure the homepage shows...
 
-if curl -sL -w %{http_code} "$URL" -o /dev/null | grep "200"
+if curl -sL -w %{http_code} "$cmdURL" -o /dev/null | grep "200"
 then
-    echo "[$URL] shows 'HTTP/1.1 200 OK' (as expected)."
+    echo "[$cmdURL] shows 'HTTP/1.1 200 OK' (as expected)."
 else
-    echo -e "\e[31mError. Not showing '200 OK' on [$URL]"
+    echo -e "\e[31mError. Command-side unresponsive - not showing '200 OK' on [$cmdURL]"
     exit 1
 fi
 
-# Make sure the /info endpoint shows...
-
-if curl -sL -w %{http_code} "$URL/info" -o /dev/null | grep "200"
+if curl -sL -w %{http_code} "$qryURL" -o /dev/null | grep "200"
 then
-    echo "[$URL/info] shows 'HTTP Status 200 OK' (as expected)."
+    echo "[$qryURL] shows 'HTTP/1.1 200 OK' (as expected)."
 else
-    echo -e "\e[31mError. Not showing '200 OK' on [$URL/info]"
+    echo -e "\e[31mError. Command-side unresponsive - not showing '200 OK' on [$qryURL]"
     exit 1
 fi
 
-# Make sure the /env endpoint shows...
+# Begin the Integration-testing...
 
-if curl -sL -w %{http_code} "$URL/env" -o /dev/null | grep "200"
-then
-    echo "[$URL/env] shows 'HTTP Status 200 OK' (as expected)."
-else
-    echo -e "\e[31mError. Not showing '200 OK' on [$URL/env]"
-    exit 1
-fi
-
-# Make sure the homepage shows there is a DataBase Service bound...
-
-if curl -s "$URL/dash" | grep "MySQL"
-then
-    echo "The website [$URL/dash] shows 'MySQL' (as expected)."
-else
-    echo -e "\e[31mError. Not showing 'MySQL' on [$URL/dash]"
-    exit 1
-fi
-
-# Make sure the homepage shows there is a Messaging Service bound...
-
-if curl -s "$URL/dash" | grep "Rabbit MQ"
-then
-    echo "The website [$URL/dash] shows 'Rabbit MQ' (as expected)."
-else
-    echo -e "\e[31mError. Not showing 'Rabbit MQ' on [$URL/dash]"
-    exit 1
-fi
-
-# Make sure the homepage shows there is a Config Service bound...
-
-if curl -s "$URL/dash" | grep "Config Server"
-then
-    echo "The website [$URL/dash] shows 'Config Server' (as expected)."
-else
-    echo -e "\e[31mError. Not showing 'Config Server' on [$URL/dash]"
-    exit 1
-fi
-
-# Make sure the homepage shows there is a Registry Service bound...
-
-if curl -s "$URL/dash" | grep "Service Registry"
-then
-    echo "The website [$URL/dash] shows 'Service Registry' (as expected)."
-else
-    echo -e "\e[31mError. Not showing 'Service Registry' on [$URL/dash]"
-    exit 1
-fi
-
-# Make sure on the homepage the host name is set correctly - this means Config server integration is OK
-
-if curl -s "$URL/dash" | grep "Your host today was: Ben"
-then
-    echo -e "The page [$URL/dash] shows 'Your host today was: Ben' (as expected, Spring Config Server integration is working)."
-else
-    echo -e "\e[31mError. Not showing 'Your host today was: Ben' on [$URL/dash] - Integration of Spring Config Server has regressed or failed...\e[0m"
-    exit 1
-fi
-
-
-export UUID=`uuidgen`
+export UUID=`uuid`
 export PRODUCT_ID=`curl -s -H "Content-Type:application/json" -d "{\"id\":\"${UUID}\", \"name\":\"test-${UUID}\"}" ${URL}/add`
+
 if [ "$PRODUCT_ID" = "$UUID" ]
 then
     echo -e "The command [$URL/add] for Product $UUID returned ID $PRODUCT_ID (as expected)."
@@ -112,5 +52,5 @@ else
 fi
 
 
-echo -e "\e[32mCOMMAND-SIDE SMOKE TEST FINISHED - ZERO ERRORS ;D "
+echo -e "\e[32mINTEGRATION-TESTS COMPLETED - ZERO ERRORS ;D "
 exit 0
