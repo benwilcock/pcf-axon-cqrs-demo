@@ -1,0 +1,16 @@
+---
+services:
+  - mysql
+  - rabbit
+  - config
+  - registry
+
+applications:
+- name: command-side
+  path: command-side/build/libs/pcf-axon-cqrs-demo-command-side.jar
+  memory: 1G
+  random-route: true
+- name: query-side
+  path: query-side/build/libs/pcf-axon-cqrs-demo-query-side.jar
+  memory: 1G
+  random-route: true
