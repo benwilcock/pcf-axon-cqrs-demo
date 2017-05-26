@@ -1,7 +1,7 @@
 ---
 jobs:
 - name: build-command-side
-  public: true
+  public: false
   plan:
   - get: source-code
     trigger: true
@@ -15,7 +15,7 @@ jobs:
       path: package-output/pcf-axon-cqrs-demo-command-side.jar
 
 - name: build-query-side
-  public: true
+  public: false
   plan:
   - get: source-code
     trigger: true
@@ -29,7 +29,7 @@ jobs:
       path: package-output/pcf-axon-cqrs-demo-query-side.jar
 
 - name: smoke-test-command-side
-  public: true
+  public: false
   plan:
   - get: source-code
     trigger: true
@@ -47,7 +47,7 @@ jobs:
         SMOKE TEST PASSED in Job "$BUILD_JOB_NAME" for Pipeline "$BUILD_PIPELINE_NAME"!
 
 - name: smoke-test-query-side
-  public: true
+  public: false
   plan:
   - get: source-code
     trigger: true
@@ -64,6 +64,25 @@ jobs:
       text: |
         SMOKE TEST PASSED in Job "$BUILD_JOB_NAME" for Pipeline "$BUILD_PIPELINE_NAME"!
 
+- name: smoke-test-query-side
+  public: false
+  plan:
+  - get: source-code
+    trigger: true
+    passed: [smoke-test-command-side, smoke-test-query-side]
+  - get: timer
+    trigger: true
+    passed: [smoke-test-command-side, smoke-test-query-side]
+  - task: integration-test-both-sides
+    file: source-code/ci/tasks/integration-test-both-sides.yml
+    params:
+      cmdURL: {{cf-cmd-app-url}}
+      qryURL: {{cf-qry-app-url}}
+  - put: slack-alert
+    params:
+      text: |
+        INTEGRAATION TEST PASSED in Job "$BUILD_JOB_NAME" for Pipeline "$BUILD_PIPELINE_NAME"!
+
 resource_types:
 - name: slack-notification
   type: docker-image
@@ -76,7 +95,7 @@ resources:
   type: git
   source:
     uri: https://github.com/benwilcock/pcf-axon-cqrs-demo
-    branch: master
+    branch: commando
 
 - name: timer
   type: time

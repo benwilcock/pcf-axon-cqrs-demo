@@ -4,12 +4,20 @@ apt-get update && apt-get install -y curl --allow-unauthenticated
 
 #set -ex
 
-if [ -z $URL ];
+if [ -z $cmdURL ];
 then
-  echo -e "\e[31mThe URL to test has not been set."
+  echo -e "\e[31mThe Command-side URL to test has not been set."
   exit 1
 else
-  echo -e "The base URL for this smoke test is: \e[32m $URL \e[0m"
+  echo -e "The Command-side URL for this smoke test is: \e[32m $cmdURL \e[0m"
+fi
+
+if [ -z $qryURL ];
+then
+  echo -e "\e[31mThe Query-side URL to test has not been set."
+  exit 1
+else
+  echo -e "The Query-side URL for this smoke test is: \e[32m $qryURL \e[0m"
 fi
 
 # Make sure the homepage shows...
