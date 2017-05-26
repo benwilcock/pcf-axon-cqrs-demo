@@ -95,7 +95,7 @@ resources:
   type: git
   source:
     uri: https://github.com/benwilcock/pcf-axon-cqrs-demo
-    branch: commando
+    branch: master
 
 - name: timer
   type: time
