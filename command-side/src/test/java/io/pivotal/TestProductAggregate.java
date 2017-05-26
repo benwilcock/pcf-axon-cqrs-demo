@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import java.util.UUID;
 
-public class ProductAggregateTest {
+public class TestProductAggregate {
 
     private FixtureConfiguration fixture;
     private String id;

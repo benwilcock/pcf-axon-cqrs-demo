@@ -17,9 +17,9 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class ProductCatalogRestControllerTest {
+public class TestControllerWillAddProductToCatalog {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ProductCatalogRestControllerTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TestControllerWillAddProductToCatalog.class);
 
     private String id;
     private String name;

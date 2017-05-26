@@ -21,9 +21,9 @@ import static org.assertj.core.api.BDDAssertions.then;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = PcfAxonCqrsCommandSideApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-public class ITAddProductToCatalog {
+public class TestRestWillAddProductToCatalog {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ITAddProductToCatalog.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TestRestWillAddProductToCatalog.class);
 
     private String id;
     private String name;
