@@ -64,7 +64,7 @@ jobs:
       text: |
         SMOKE TEST PASSED in Job "$BUILD_JOB_NAME" for Pipeline "$BUILD_PIPELINE_NAME"!
 
-- name: smoke-test-query-side
+- name: integration-test-both-sides
   public: false
   plan:
   - get: source-code

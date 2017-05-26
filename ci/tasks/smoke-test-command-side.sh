@@ -93,7 +93,7 @@ else
 fi
 
 
-export UUID=`uuidgen`
+export UUID=`uuid`
 export PRODUCT_ID=`curl -s -H "Content-Type:application/json" -d "{\"id\":\"${UUID}\", \"name\":\"test-${UUID}\"}" ${URL}/add`
 if [ "$PRODUCT_ID" = "$UUID" ]
 then
