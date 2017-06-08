@@ -1,12 +1,12 @@
 plugins {
     id "com.gorylenko.gradle-git-properties" version "1.4.16"
-    id "io.spring.dependency-management" version "1.0.2.RELEASE"
+    id "io.spring.dependency-management" version "1.0.3.RELEASE"
     id 'org.springframework.boot' version '1.5.2.RELEASE'
 }
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Camden.SR6"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Dalston.SR1"
         mavenBom "io.pivotal.spring.cloud:spring-cloud-services-dependencies:1.4.1.RELEASE"
     }
 }
