@@ -81,7 +81,7 @@ jobs:
   - put: slack-alert
     params:
       text: |
-        INTEGRAATION TEST PASSED in Job "$BUILD_JOB_NAME" for Pipeline "$BUILD_PIPELINE_NAME"!
+        INTEGRATION TEST PASSED in Job "$BUILD_JOB_NAME" for Pipeline "$BUILD_PIPELINE_NAME"!
 
 resource_types:
 - name: slack-notification
