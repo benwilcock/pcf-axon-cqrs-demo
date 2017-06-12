@@ -44,7 +44,7 @@ public class PcfSpringBootApplication {
     public SpringAMQPMessageSource complaintEvents(Serializer serializer) {
         return new SpringAMQPMessageSource(new DefaultAMQPMessageConverter(serializer)) {
 
-            @RabbitListener(queues = "${axon.amqp.exchange:CatalogEvents")
+            @RabbitListener(queues = "CatalogEvents")
             @Override
             public void onMessage(Message message, Channel channel) throws Exception {
                 LOG.info("I Heard: {}", message.getBody().toString());
