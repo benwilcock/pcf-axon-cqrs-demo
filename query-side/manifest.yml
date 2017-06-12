@@ -3,7 +3,6 @@ applications:
   path: build/libs/pcf-axon-cqrs-demo-query-side.jar
   memory: 1G
   services:
-    - mysql
     - rabbit
     - config
     - registry

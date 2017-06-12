@@ -44,7 +44,7 @@ jobs:
   - put: slack-alert
     params:
       text: |
-        SMOKE TEST PASSED in Job "$BUILD_JOB_NAME" for Pipeline "$BUILD_PIPELINE_NAME"!
+        CMD SMOKE TEST PASSED in Job "$BUILD_JOB_NAME" for Pipeline "$BUILD_PIPELINE_NAME"!
 
 - name: smoke-test-query-side
   public: false
@@ -62,7 +62,7 @@ jobs:
   - put: slack-alert
     params:
       text: |
-        SMOKE TEST PASSED in Job "$BUILD_JOB_NAME" for Pipeline "$BUILD_PIPELINE_NAME"!
+        QRY SMOKE TEST PASSED in Job "$BUILD_JOB_NAME" for Pipeline "$BUILD_PIPELINE_NAME"!
 
 - name: integration-test-both-sides
   public: false
@@ -81,7 +81,7 @@ jobs:
   - put: slack-alert
     params:
       text: |
-        INTEGRATION TEST PASSED in Job "$BUILD_JOB_NAME" for Pipeline "$BUILD_PIPELINE_NAME"!
+        CQRS INTEGRATION TEST PASSED in Job "$BUILD_JOB_NAME" for Pipeline "$BUILD_PIPELINE_NAME"!
 
 resource_types:
 - name: slack-notification
