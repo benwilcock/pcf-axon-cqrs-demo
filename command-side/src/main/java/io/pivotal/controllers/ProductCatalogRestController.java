@@ -30,12 +30,10 @@ public class ProductCatalogRestController {
 
         LOG.info("Adding Product to Catalog: {}, {}", request.get("id"), request.get("name"));
 
-        AddProductToCatalog addProductToCatalogCommand = new AddProductToCatalog(
+        return catalogService.addProductToCatalog(new AddProductToCatalog(
                 request.get("id"),
                 request.get("name")
-        );
-
-        return catalogService.addProductToCatalog(addProductToCatalogCommand);
+        ));
     }
 }
 

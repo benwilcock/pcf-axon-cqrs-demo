@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Profile;
  * Created by amirea on 5/24/17.
  */
 @Configuration
-@Profile("test")
+@Profile("mockAmqpAdminForEventPublicationConfig")
 public class TestConfig {
 
     @MockBean
