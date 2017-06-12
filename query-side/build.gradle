@@ -44,6 +44,10 @@ dependencies {
     // compile('org.springframework.cloud:spring-cloud-stream-binder-rabbit')
     // compile('org.springframework.cloud:spring-cloud-sleuth-zipkin-stream')
 
+    // Axon CQRS / ES Framework
+    compile("org.axonframework:axon-spring-boot-starter:${axonVersion}")
+    compile("org.axonframework:axon-amqp:${axonVersion}")
+
 	// Test
 	testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }
