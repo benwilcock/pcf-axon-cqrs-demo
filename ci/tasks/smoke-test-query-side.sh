@@ -43,14 +43,13 @@ else
 fi
 
 # Make sure the homepage shows there is a DataBase Service bound...
-
-if curl -s "$URL/dash" | grep "MySQL"
-then
-    echo "The website [$URL/dash] shows 'MySQL' (as expected)."
-else
-    echo -e "\e[31mError. Not showing 'MySQL' on [$URL/dash]"
-    exit 1
-fi
+#if curl -s "$URL/dash" | grep "MySQL"
+#then
+#    echo "The website [$URL/dash] shows 'MySQL' (as expected)."
+#else
+#    echo -e "\e[31mError. Not showing 'MySQL' on [$URL/dash]"
+#    exit 1
+#fi
 
 # Make sure the homepage shows there is a Messaging Service bound...
 
