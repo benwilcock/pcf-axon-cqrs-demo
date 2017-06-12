@@ -1,11 +1,10 @@
-package io.pivotal;
+package io.pivotal.controllers;
 
 import io.pivotal.commands.AddProductToCatalog;
-import org.axonframework.commandhandling.gateway.CommandGateway;
+import io.pivotal.services.CatalogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,17 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-@RefreshScope
+
 @RestController
 public class ProductCatalogRestController {
 
     private static final Logger LOG = LoggerFactory.getLogger(ProductCatalogRestController.class);
 
-    private final CommandGateway commandGateway;
+    private final CatalogService catalogService;
 
     @Autowired
-    public ProductCatalogRestController(CommandGateway commandGateway) {
-        this.commandGateway = commandGateway;
+    public ProductCatalogRestController(CatalogService commandGateway) {
+        this.catalogService = commandGateway;
     }
 
     @PostMapping("/add")
@@ -36,7 +35,7 @@ public class ProductCatalogRestController {
                 request.get("name")
         );
 
-        return this.commandGateway.send(addProductToCatalogCommand);
+        return catalogService.addProductToCatalog(addProductToCatalogCommand);
     }
 }
 

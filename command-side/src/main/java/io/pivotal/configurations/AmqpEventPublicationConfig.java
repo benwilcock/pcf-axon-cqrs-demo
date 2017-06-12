@@ -1,4 +1,4 @@
-package io.pivotal;
+package io.pivotal.configurations;
 
 import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Autowired;

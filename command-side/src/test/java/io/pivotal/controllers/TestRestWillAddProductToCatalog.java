@@ -1,6 +1,7 @@
-package io.pivotal;
+package io.pivotal.controllers;
 
 
+import io.pivotal.PcfAxonCqrsCommandSideApplication;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,18 +24,9 @@ import static org.assertj.core.api.BDDAssertions.then;
 @ActiveProfiles("test")
 public class TestRestWillAddProductToCatalog {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TestRestWillAddProductToCatalog.class);
-
     private String id;
     private String name;
     private String addProductJson;
-
-    @Before
-    public void init() {
-        id = UUID.randomUUID().toString();
-        name = "test-" + id;
-        addProductJson = "{\"id\":\"" + id + "\",\"name\":\"" + name + "\"}";
-    }
 
     private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
             MediaType.APPLICATION_JSON.getSubtype(),
@@ -43,20 +35,25 @@ public class TestRestWillAddProductToCatalog {
     @Autowired
     private TestRestTemplate restTemplate;
 
-
-    @Test
-    public void testRestEndpoint() {
-        String body = restTemplate.getForObject("/rest", String.class);
-        then(body).isEqualTo("{\"yourHostIs\":\"Unknown\",\"applicationName\":\"pcf-axon-cqrs-demo-command-side\"}");
+    @Before
+    public void init() {
+        id = UUID.randomUUID().toString();
+        name = "test-" + id;
+        addProductJson = "{\"id\":\"" + id + "\",\"name\":\"" + name + "\"}";
     }
 
     @Test
     public void addProductToCatalogueTest() {
+
+        //Arrange
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(contentType);
         HttpEntity<String> entity = new HttpEntity<String>(addProductJson, headers);
+
+        //Act
         ResponseEntity<String> response = restTemplate.exchange("/add", HttpMethod.POST, entity, String.class);
-        LOG.info("Response Body: {}", response.getBody());
+
+        //Assert
         then(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         then(response.getBody()).isNotEmpty();
         then(response.getBody()).isNotBlank();

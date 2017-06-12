@@ -23,7 +23,7 @@ public class PcfAxonCqrsCommandSideApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(PcfAxonCqrsCommandSideApplication.class, args);
-        LOG.info("Starting the COMMAND-SIDE PCF Axon CQRS Demo with SpringBoot.");
+        LOG.info("Starting the COMMAND-SIDE PCF Axon CQRS Demo using SpringBoot.");
     }
 
     @RefreshScope

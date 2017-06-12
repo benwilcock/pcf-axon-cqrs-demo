@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.pivotal;
+package io.pivotal.controllers;
 
-import java.util.Map;
-
+import io.pivotal.PcfAxonCqrsCommandSideApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +29,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Map;
+
 import static org.assertj.core.api.BDDAssertions.then;
 
-/**
- * Basic integration tests for service demo application with Actuator.
- * @author Dave Syer, Ben Wilcock
- */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = PcfAxonCqrsCommandSideApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {"management.port=0", "your.host.is=Test"})
@@ -59,20 +56,36 @@ public class TestRestWillGetServiceInformation {
     }
 
     @Test
+    public void testRestEndpoint() {
+
+        //Act
+        String body = testRestTemplate.getForObject("/rest", String.class);
+
+        //Assert
+        then(body).isEqualTo("{\"yourHostIs\":\"Test\",\"applicationName\":\"pcf-axon-cqrs-demo-command-side\"}");
+    }
+
+    @Test
     public void shouldReturn200WhenSendingRequestToController() throws Exception {
+
+        //Act
         @SuppressWarnings("rawtypes")
         ResponseEntity<Map> entity = this.testRestTemplate.getForEntity(
                 "http://localhost:" + this.port + "/rest", Map.class);
 
+        //Assert
         then(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
     @Test
     public void responseShouldHaveContent() throws Exception {
+
+        //Act
         @SuppressWarnings("rawtypes")
         ResponseEntity<Map> entity = this.testRestTemplate.getForEntity(
                 "http://localhost:" + this.port + "/rest", Map.class);
 
+        //Assert
         then(entity.hasBody()).isTrue();
         then(entity.getBody().containsKey("yourHostIs")).isTrue();
         then(entity.getBody().get("yourHostIs")).isEqualTo("Test");
@@ -80,10 +93,13 @@ public class TestRestWillGetServiceInformation {
 
     @Test
     public void shouldReturn200WhenSendingRequestToActuatorInfoEndpoint() throws Exception {
+
+        //Act
         @SuppressWarnings("rawtypes")
         ResponseEntity<Map> entity = this.testRestTemplate.getForEntity(
                 "http://localhost:" + this.mgt + "/info", Map.class);
 
+        //Assert
         then(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
