@@ -1,7 +1,7 @@
 plugins {
     id "com.gorylenko.gradle-git-properties" version "1.4.16"
     id "io.spring.dependency-management" version "1.0.3.RELEASE"
-    id 'org.springframework.boot' version '1.5.2.RELEASE'
+    id 'org.springframework.boot' version '1.5.4.RELEASE'
 }
 
 dependencyManagement {
@@ -25,17 +25,17 @@ dependencies {
     compile project(':common-api')
 
 	// Spring Web
-    compile('org.springframework.boot:spring-boot-starter-web')
-    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-    compile("org.springframework.boot:spring-boot-devtools")
-    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-devtools:${springBootVersion}")
 
     // Database (Required by SCS Connector if DB is bound to app in PCF)
-	compile('org.springframework.boot:spring-boot-starter-jdbc')
+	compile("org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}")
 	compile('com.h2database:h2')
 
     // Messaging
-    compile('org.springframework.boot:spring-boot-starter-amqp')
+    compile("org.springframework.boot:spring-boot-starter-amqp:${springBootVersion}")
 
     // Spring Cloud
     compile("io.pivotal.spring.cloud:spring-cloud-services-starter-config-client")
@@ -45,7 +45,7 @@ dependencies {
     // compile('org.springframework.cloud:spring-cloud-sleuth-zipkin-stream')
 
 	// Test
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }
 
 springBoot  {

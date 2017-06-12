@@ -1,12 +1,13 @@
 subprojects {
 
   buildscript {
+      ext {
+          springBootVersion = '1.5.4.RELEASE'
+          axonVersion = '3.0.5'
+      }
       repositories {
           mavenCentral()
-      }
-      
-      dependencies {
-        //none
+          jcenter()
       }
     }
 
