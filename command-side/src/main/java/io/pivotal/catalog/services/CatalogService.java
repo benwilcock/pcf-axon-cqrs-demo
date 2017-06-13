@@ -1,6 +1,6 @@
-package io.pivotal.services;
+package io.pivotal.catalog.services;
 
-import io.pivotal.commands.AddProductToCatalog;
+import io.pivotal.catalog.commands.AddProductToCatalogCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -21,8 +21,8 @@ public class CatalogService {
         this.commandGateway = commandGateway;
     }
 
-    public CompletableFuture<String> addProductToCatalog(AddProductToCatalog command){
-        LOG.debug("Processing AddProductToCatalog command id={} name={}.", command.getId(), command.getName());
+    public CompletableFuture<String> addProductToCatalog(AddProductToCatalogCommand command){
+        LOG.debug("Processing AddProductToCatalogCommand command id={} name={}.", command.getId(), command.getName());
         return this.commandGateway.send(command);
     }
 }

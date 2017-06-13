@@ -1,7 +1,7 @@
-package io.pivotal.aggregates;
+package io.pivotal.catalog.aggregates;
 
 import cqrsdemo.events.ProductAddedEvent;
-import io.pivotal.commands.AddProductToCatalog;
+import io.pivotal.catalog.commands.AddProductToCatalogCommand;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
 import org.axonframework.eventsourcing.EventSourcingHandler;
@@ -25,7 +25,7 @@ public class ProductAggregate {
     }
 
     @CommandHandler
-    public ProductAggregate(AddProductToCatalog cmd) {
+    public ProductAggregate(AddProductToCatalogCommand cmd) {
         LOG.debug("Handling {} command: {}, {}", cmd.getClass().getSimpleName(), cmd.getId(), cmd.getName());
         Assert.hasLength(cmd.getId(), "ID should NOT be empty or null.");
         Assert.hasLength(cmd.getName(), "Name should NOT be empty or null.");

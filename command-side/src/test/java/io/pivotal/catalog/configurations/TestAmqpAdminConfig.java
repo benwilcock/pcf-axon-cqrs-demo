@@ -1,4 +1,4 @@
-package io.pivotal.configurations;
+package io.pivotal.catalog.configurations;
 
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Profile;
  */
 @Configuration
 @Profile("mockAmqpAdminForEventPublicationConfig")
-public class TestConfig {
+public class TestAmqpAdminConfig {
 
     @MockBean
     public AmqpAdmin amqpAdmin;

@@ -1,6 +1,6 @@
-package io.pivotal.services;
+package io.pivotal.catalog.services;
 
-import io.pivotal.commands.AddProductToCatalog;
+import io.pivotal.catalog.commands.AddProductToCatalogCommand;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class TestServiceCallsAxonCommandGateway {
 
     private String id;
     private String name;
-    private AddProductToCatalog command;
+    private AddProductToCatalogCommand command;
 
     @MockBean
     private CommandGateway commandGateway;
@@ -37,7 +37,7 @@ public class TestServiceCallsAxonCommandGateway {
     public void init() {
         id = UUID.randomUUID().toString();
         name = "test-" + id;
-        command = new AddProductToCatalog(id, name);
+        command = new AddProductToCatalogCommand(id, name);
         service = new CatalogService(commandGateway);
     }
 

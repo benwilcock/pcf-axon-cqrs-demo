@@ -1,7 +1,8 @@
-package io.pivotal.controllers;
+package io.pivotal.catalog.controllers;
 
-import io.pivotal.commands.AddProductToCatalog;
-import io.pivotal.services.CatalogService;
+import io.pivotal.catalog.api.CatalogApi;
+import io.pivotal.catalog.commands.AddProductToCatalogCommand;
+import io.pivotal.catalog.services.CatalogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,23 +15,24 @@ import java.util.concurrent.CompletableFuture;
 
 
 @RestController
-public class ProductCatalogRestController {
+public class CatalogApiController implements CatalogApi {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ProductCatalogRestController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CatalogApiController.class);
 
     private final CatalogService catalogService;
 
     @Autowired
-    public ProductCatalogRestController(CatalogService commandGateway) {
+    public CatalogApiController(CatalogService commandGateway) {
         this.catalogService = commandGateway;
     }
 
+    @Override
     @PostMapping("/add")
     public CompletableFuture<String> addProductToCatalog(@RequestBody Map<String, String> request) {
 
         LOG.info("Adding Product to Catalog: {}, {}", request.get("id"), request.get("name"));
 
-        return catalogService.addProductToCatalog(new AddProductToCatalog(
+        return catalogService.addProductToCatalog(new AddProductToCatalogCommand(
                 request.get("id"),
                 request.get("name")
         ));

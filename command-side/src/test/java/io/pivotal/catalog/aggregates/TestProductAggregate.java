@@ -1,7 +1,7 @@
-package io.pivotal.aggregates;
+package io.pivotal.catalog.aggregates;
 
 import cqrsdemo.events.ProductAddedEvent;
-import io.pivotal.commands.AddProductToCatalog;
+import io.pivotal.catalog.commands.AddProductToCatalogCommand;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.FixtureConfiguration;
 import org.junit.Before;
@@ -26,7 +26,7 @@ public class TestProductAggregate {
     @Test
     public void testCommandAddProductToCatalogPasses() {
         fixture.given()
-                .when(new AddProductToCatalog(id, name))
+                .when(new AddProductToCatalogCommand(id, name))
                 .expectSuccessfulHandlerExecution()
                 .expectEvents(new ProductAddedEvent(id, name));
     }
@@ -34,22 +34,22 @@ public class TestProductAggregate {
     @Test
     public void testCommandAddProductToCatalogFailsWhenIdNull() {
         fixture.given()
-                .when(new AddProductToCatalog(null, name))
+                .when(new AddProductToCatalogCommand(null, name))
                 .expectException(IllegalArgumentException.class);
 
         fixture.given()
-                .when(new AddProductToCatalog("", name))
+                .when(new AddProductToCatalogCommand("", name))
                 .expectException(IllegalArgumentException.class);
     }
 
     @Test
     public void testCommandAddProductToCatalogFailsWhenNameNull() {
         fixture.given()
-                .when(new AddProductToCatalog(id, null))
+                .when(new AddProductToCatalogCommand(id, null))
                 .expectException(IllegalArgumentException.class);
 
         fixture.given()
-                .when(new AddProductToCatalog(id, ""))
+                .when(new AddProductToCatalogCommand(id, ""))
                 .expectException(IllegalArgumentException.class);
     }
 

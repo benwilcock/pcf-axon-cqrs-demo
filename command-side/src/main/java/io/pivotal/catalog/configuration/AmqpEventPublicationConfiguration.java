@@ -1,4 +1,4 @@
-package io.pivotal.configurations;
+package io.pivotal.catalog.configuration;
 
 import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class AmqpEventPublicationConfig {
+public class AmqpEventPublicationConfiguration {
 
 
     @Value("${axon.amqp.exchange:CatalogEvents}")

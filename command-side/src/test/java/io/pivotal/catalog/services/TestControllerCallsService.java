@@ -1,7 +1,8 @@
-package io.pivotal.services;
+package io.pivotal.catalog.services;
 
-import io.pivotal.commands.AddProductToCatalog;
-import io.pivotal.controllers.ProductCatalogRestController;
+import io.pivotal.catalog.api.CatalogApi;
+import io.pivotal.catalog.commands.AddProductToCatalogCommand;
+import io.pivotal.catalog.controllers.CatalogApiController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,15 +27,15 @@ public class TestControllerCallsService {
 
     private String id;
     private String name;
-    private ProductCatalogRestController controller;
-    private AddProductToCatalog command;
+    private CatalogApi controller;
+    private AddProductToCatalogCommand command;
 
     @Mock
     private CatalogService mockCatalogService;
 
     @Before
     public void init() {
-        controller = new ProductCatalogRestController(mockCatalogService);
+        controller = new CatalogApiController(mockCatalogService);
         id = UUID.randomUUID().toString();
         name = "test-" + id;
     }
@@ -44,7 +45,7 @@ public class TestControllerCallsService {
     public void testApi() throws Exception {
 
         //Arrange
-        when(mockCatalogService.addProductToCatalog(any(AddProductToCatalog.class)))
+        when(mockCatalogService.addProductToCatalog(any(AddProductToCatalogCommand.class)))
                 .thenReturn(CompletableFuture.supplyAsync(this::getId));
 
         //Act
@@ -54,7 +55,7 @@ public class TestControllerCallsService {
         CompletableFuture<String> response = controller.addProductToCatalog(map);
 
         //Assert
-        verify(mockCatalogService).addProductToCatalog(any(AddProductToCatalog.class));
+        verify(mockCatalogService).addProductToCatalog(any(AddProductToCatalogCommand.class));
         assertEquals(id, response.get().toString());
     }
 
