@@ -1,22 +1,14 @@
-package io.pivotal;
+package io.pivotal.catalog;
 
-import com.rabbitmq.client.Channel;
-import cqrsdemo.events.ProductAddedEvent;
-import org.axonframework.amqp.eventhandling.DefaultAMQPMessageConverter;
-import org.axonframework.amqp.eventhandling.spring.SpringAMQPMessageSource;
-import org.axonframework.config.ProcessingGroup;
-import org.axonframework.eventhandling.EventHandler;
-import org.axonframework.serialization.Serializer;
+import io.pivotal.catalog.components.EventProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,35 +19,13 @@ import java.util.Map;
 
 @EnableDiscoveryClient
 @SpringBootApplication
-@ProcessingGroup("amqpEvents")
-public class PcfSpringBootApplication {
+public class CatalogueViewerApplication {
 
-    private static final Logger LOG = LoggerFactory.getLogger(PcfSpringBootApplication.class);
-
-    @Value("${axon.amqp.exchange:CatalogEvents}")
-    String exchangeName;
+    private static final Logger LOG = LoggerFactory.getLogger(CatalogueViewerApplication.class);
 
     public static void main(String[] args) {
-        SpringApplication.run(PcfSpringBootApplication.class, args);
-        LOG.info("Starting the QUERY-SIDE PCF Axon CQRS Demo with SpringBoot.");
-    }
-
-    @Bean
-    public SpringAMQPMessageSource complaintEvents(Serializer serializer) {
-        return new SpringAMQPMessageSource(new DefaultAMQPMessageConverter(serializer)) {
-
-            @RabbitListener(queues = "CatalogEvents")
-            @Override
-            public void onMessage(Message message, Channel channel) throws Exception {
-                LOG.info("I Heard: {}", message.getBody().toString());
-                super.onMessage(message, channel);
-            }
-        };
-    }
-
-    @EventHandler
-    public void on(ProductAddedEvent productAddedEvent) {
-        LOG.info("A product was added! {}", productAddedEvent);
+        SpringApplication.run(CatalogueViewerApplication.class, args);
+        LOG.info("Starting the QUERY-SIDE PCF Axon CQRS Demo [The Catalog Viewer] with SpringBoot.");
     }
 
     @RefreshScope

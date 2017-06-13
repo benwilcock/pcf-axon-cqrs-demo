@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.pivotal;
+package io.pivotal.catalog;
 
 import java.util.Map;
 
@@ -36,9 +36,9 @@ import static org.assertj.core.api.BDDAssertions.then;
  * @author Dave Syer, Ben Wilcock
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = PcfSpringBootApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = CatalogueViewerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {"management.port=0", "your.host.is=Test"})
-public class PcfSpringBootApplicationLocalIntegrationTests {
+public class CatalogueViewerApplicationLocalIntegrationTests {
 
     @LocalServerPort
     private int port;
