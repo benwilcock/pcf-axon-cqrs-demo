@@ -15,8 +15,6 @@
  */
 package io.pivotal.catalog;
 
-import java.util.Map;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +27,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Map;
+
 import static org.assertj.core.api.BDDAssertions.then;
 
 /**
  * Basic integration tests for service demo application with Actuator.
+ *
  * @author Dave Syer, Ben Wilcock
  */
 @RunWith(SpringRunner.class)
