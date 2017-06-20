@@ -31,8 +31,12 @@ dependencies {
     compile("org.springframework.boot:spring-boot-devtools:${springBootVersion}")
 
     // Database (Required by SCS Connector if DB is bound to app in PCF)
-	compile("org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}")
-	compile('com.h2database:h2')
+//	compile("org.springframework.boot:spring-boot-starter-jdbc:${springBootVersion}")
+//	compile('com.h2database:h2')
+
+    // Redis Multi-purpose in-memory repo.
+    compile("org.springframework.boot:spring-boot-starter-data-redis:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-data-rest:${springBootVersion}")
 
     // Messaging
     compile("org.springframework.boot:spring-boot-starter-amqp:${springBootVersion}")

@@ -4,6 +4,7 @@ services:
   - rabbit
   - config
   - registry
+  - redis
 
 applications:
 - name: command-side

@@ -6,3 +6,4 @@ applications:
     - rabbit
     - config
     - registry
+    - redis
