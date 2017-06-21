@@ -5,8 +5,9 @@ jobs:
   plan:
   - get: source-code
     trigger: true
-  - get: midday-weekdays
-    trigger: true
+    version: every
+#  - get: midday-weekdays
+#    trigger: false
   - task: package-command-side
     file: source-code/ci/tasks/build-command-side.yml
   - put: push-to-pcf
@@ -19,8 +20,9 @@ jobs:
   plan:
   - get: source-code
     trigger: true
-  - get: midday-weekdays
-    trigger: true
+    version: every
+#  - get: midday-weekdays
+#    trigger: false
   - task: package-query-side
     file: source-code/ci/tasks/build-query-side.yml
   - put: push-to-pcf
@@ -34,9 +36,9 @@ jobs:
   - get: source-code
     trigger: true
     passed: [build-command-side]
-  - get: midday-weekdays
-    trigger: true
-    passed: [build-command-side]
+#  - get: midday-weekdays
+#    trigger: true
+#    passed: [build-command-side]
   - task: smoke-test-command-side
     file: source-code/ci/tasks/smoke-test-command-side.yml
     params:
@@ -52,9 +54,9 @@ jobs:
   - get: source-code
     trigger: true
     passed: [build-query-side]
-  - get: midday-weekdays
-    trigger: true
-    passed: [build-query-side]
+#  - get: midday-weekdays
+#    trigger: true
+#    passed: [build-query-side]
   - task: smoke-test-query-side
     file: source-code/ci/tasks/smoke-test-query-side.yml
     params:
@@ -70,9 +72,9 @@ jobs:
   - get: source-code
     trigger: true
     passed: [smoke-test-command-side, smoke-test-query-side]
-  - get: midday-weekdays
-    trigger: true
-    passed: [smoke-test-command-side, smoke-test-query-side]
+#  - get: midday-weekdays
+#    trigger: true
+#    passed: [smoke-test-command-side, smoke-test-query-side]
   - task: integration-test-both-sides
     file: source-code/ci/tasks/integration-test-both-sides.yml
     params:
@@ -101,13 +103,13 @@ resources:
 #  type: time
 #  source: {interval: 24h}
 
-- name: midday-weekdays
-  type: time
-  source:
-    start: 12:00 PM
-    stop: 1:00 PM
-    location: 	Europe/London
-    days: [Monday, Tuesday, Wednesday, Thursday, Friday]
+#- name: midday-weekdays
+#  type: time
+#  source:
+#    start: 12:00 PM
+#    stop: 1:00 PM
+#    location: 	Europe/London
+#    days: [Monday, Tuesday, Wednesday, Thursday, Friday]
 
 - name: push-to-pcf
   type: cf
