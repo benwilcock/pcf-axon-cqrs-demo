@@ -5,9 +5,7 @@ jobs:
   plan:
   - get: source-code
     trigger: true
-    version: every
-#  - get: midday-weekdays
-#    trigger: false
+    version: latest
   - task: package-command-side
     file: source-code/ci/tasks/build-command-side.yml
   - put: push-to-pcf
@@ -20,9 +18,7 @@ jobs:
   plan:
   - get: source-code
     trigger: true
-    version: every
-#  - get: midday-weekdays
-#    trigger: false
+    version: latest
   - task: package-query-side
     file: source-code/ci/tasks/build-query-side.yml
   - put: push-to-pcf
@@ -36,17 +32,10 @@ jobs:
   - get: source-code
     trigger: true
     passed: [build-command-side]
-#  - get: midday-weekdays
-#    trigger: true
-#    passed: [build-command-side]
   - task: smoke-test-command-side
     file: source-code/ci/tasks/smoke-test-command-side.yml
     params:
       URL: {{cf-cmd-app-url}}
-  - put: slack-alert
-    params:
-      text: |
-        CMD SMOKE TEST PASSED in Job "$BUILD_JOB_NAME" for Pipeline "$BUILD_PIPELINE_NAME"!
 
 - name: smoke-test-query-side
   public: false
@@ -54,17 +43,10 @@ jobs:
   - get: source-code
     trigger: true
     passed: [build-query-side]
-#  - get: midday-weekdays
-#    trigger: true
-#    passed: [build-query-side]
   - task: smoke-test-query-side
     file: source-code/ci/tasks/smoke-test-query-side.yml
     params:
       URL: {{cf-qry-app-url}}
-  - put: slack-alert
-    params:
-      text: |
-        QRY SMOKE TEST PASSED in Job "$BUILD_JOB_NAME" for Pipeline "$BUILD_PIPELINE_NAME"!
 
 - name: integration-test-both-sides
   public: false
@@ -72,9 +54,8 @@ jobs:
   - get: source-code
     trigger: true
     passed: [smoke-test-command-side, smoke-test-query-side]
-#  - get: midday-weekdays
-#    trigger: true
-#    passed: [smoke-test-command-side, smoke-test-query-side]
+  - get: midday-weekdays
+    trigger: true
   - task: integration-test-both-sides
     file: source-code/ci/tasks/integration-test-both-sides.yml
     params:
@@ -99,17 +80,13 @@ resources:
     uri: https://github.com/benwilcock/pcf-axon-cqrs-demo
     branch: master
 
-#- name: timer
-#  type: time
-#  source: {interval: 24h}
-
-#- name: midday-weekdays
-#  type: time
-#  source:
-#    start: 12:00 PM
-#    stop: 1:00 PM
-#    location: 	Europe/London
-#    days: [Monday, Tuesday, Wednesday, Thursday, Friday]
+- name: midday-weekdays
+  type: time
+  source:
+    start: 12:00 PM
+    stop: 1:00 PM
+    location: 	Europe/London
+    days: [Monday, Tuesday, Wednesday, Thursday, Friday]
 
 - name: push-to-pcf
   type: cf

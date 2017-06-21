@@ -47,11 +47,11 @@ if [ "$PRODUCT_ID" = "$UUID" ]
 then
     echo -e "[$cmdURL/add] for Product $UUID returned $PRODUCT_ID (Expected)."
 else
-    echo -e "\e[31mError. The Product ID $UUID wasn't returned as expected (got $PRODUCT_ID)! \e[0m"
+    echo -e "\e[31mError. Add Command Failed. The Product ID $UUID wasn't returned as expected (got $PRODUCT_ID)! \e[0m"
     exit 1
 fi
 
-if curl -s ${qryURL}/products | grep ${PRODUCT_ID}
+if curl -s ${qryURL}/products | grep test-${PRODUCT_ID}
 then
     echo "[$qryURL/products] had the product '$PRODUCT_ID' in the product list (Expected)."
 else
@@ -59,5 +59,5 @@ else
     exit 1
 fi
 
-echo -e "\e[32mINTEGRATION-TESTS COMPLETED - ZERO ERRORS ;D "
+echo -e "\e[32mINTEGRATION TESTS FINISHED - NO ERRORS ;D "
 exit 0
