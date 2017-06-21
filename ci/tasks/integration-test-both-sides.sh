@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#apt-get update && apt-get install -y curl uuid --allow-unauthenticated
+apt-get update && apt-get install -y curl uuid --allow-unauthenticated
 
 #set -ex
 
@@ -40,7 +40,7 @@ fi
 
 # Begin the Integration-testing...
 
-export UUID=`uuidgen`
+export UUID=`uuid`
 export PRODUCT_ID=`curl -s -H "Content-Type:application/json" -d "{\"id\":\"${UUID}\", \"name\":\"test-${UUID}\"}" ${cmdURL}/add`
 
 if [ "$PRODUCT_ID" = "$UUID" ]
