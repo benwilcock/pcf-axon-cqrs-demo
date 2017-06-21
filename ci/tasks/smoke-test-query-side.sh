@@ -53,41 +53,41 @@ fi
 
 # Make sure the homepage shows there is a Messaging Service bound...
 
-if curl -s "$URL/dash" | grep "Rabbit MQ"
+if curl -s "$URL" | grep "Rabbit MQ"
 then
-    echo "The website [$URL/dash] shows 'Rabbit MQ' (as expected)."
+    echo "The website [$URL] shows 'Rabbit MQ' (as expected)."
 else
-    echo -e "\e[31mError. Not showing 'Rabbit MQ' on [$URL/dash]"
+    echo -e "\e[31mError. Not showing 'Rabbit MQ' on [$URL]"
     exit 1
 fi
 
 # Make sure the homepage shows there is a Config Service bound...
 
-if curl -s "$URL/dash" | grep "Config Server"
+if curl -s "$URL" | grep "Config Server"
 then
-    echo "The website [$URL/dash] shows 'Config Server' (as expected)."
+    echo "The website [$URL] shows 'Config Server' (as expected)."
 else
-    echo -e "\e[31mError. Not showing 'Config Server' on [$URL/dash]"
+    echo -e "\e[31mError. Not showing 'Config Server' on [$URL]"
     exit 1
 fi
 
 # Make sure the homepage shows there is a Registry Service bound...
 
-if curl -s "$URL/dash" | grep "Service Registry"
+if curl -s "$URL" | grep "Service Registry"
 then
-    echo "The website [$URL/dash] shows 'Service Registry' (as expected)."
+    echo "The website [$URL] shows 'Service Registry' (as expected)."
 else
-    echo -e "\e[31mError. Not showing 'Service Registry' on [$URL/dash]"
+    echo -e "\e[31mError. Not showing 'Service Registry' on [$URL]"
     exit 1
 fi
 
 # Make sure on the homepage the host name is set correctly - this means Config server integration is OK
 
-if curl -s "$URL/dash" | grep "Your host today was: Aurora"
+if curl -s "$URL" | grep "Your host today was: Aurora"
 then
     echo -e "The page [$URL/dash] shows 'Your host today was: Aurora' (as expected, Spring Config Server integration is working)."
 else
-    echo -e "\e[31mError. Not showing 'Your host today was: Aurora' on [$URL/dash] - Integration of Spring Config Server has regressed or failed...\e[0m"
+    echo -e "\e[31mError. Not showing 'Your host today was: Aurora' on [$URL] - Integration of Spring Config Server has regressed or failed...\e[0m"
     exit 1
 fi
 

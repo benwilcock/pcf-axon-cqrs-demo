@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-apt-get update && apt-get install -y curl uuid --allow-unauthenticated
+#apt-get update && apt-get install -y curl uuid --allow-unauthenticated
 
 #set -ex
 
@@ -26,7 +26,7 @@ if curl -sL -w %{http_code} "$cmdURL" -o /dev/null | grep "200"
 then
     echo "[$cmdURL] shows 'HTTP/1.1 200 OK' (as expected)."
 else
-    echo -e "\e[31mError. Command-side unresponsive - not showing '200 OK' on [$cmdURL]"
+    echo -e "\e[31mError. Command-side unresponsive. Failed to show '200 OK' on [$cmdURL]"
     exit 1
 fi
 
@@ -34,13 +34,13 @@ if curl -sL -w %{http_code} "$qryURL" -o /dev/null | grep "200"
 then
     echo "[$qryURL] shows 'HTTP/1.1 200 OK' (as expected)."
 else
-    echo -e "\e[31mError. Command-side unresponsive - not showing '200 OK' on [$qryURL]"
+    echo -e "\e[31mError. Query-side unresponsive. Failed to show '200 OK' on [$qryURL]"
     exit 1
 fi
 
 # Begin the Integration-testing...
 
-export UUID=`uuid`
+export UUID=`uuidgen`
 export PRODUCT_ID=`curl -s -H "Content-Type:application/json" -d "{\"id\":\"${UUID}\", \"name\":\"test-${UUID}\"}" ${cmdURL}/add`
 
 if [ "$PRODUCT_ID" = "$UUID" ]
@@ -51,6 +51,13 @@ else
     exit 1
 fi
 
+if curl -s ${qryURL}/products | grep ${PRODUCT_ID}
+then
+    echo "[$qryURL] had product '$PRODUCT_ID' in the list (as expected)."
+else
+    echo -e "\e[31mError. Query-side failed to show product '$PRODUCT_ID' on [$qryURL]"
+    exit 1
+fi
 
 echo -e "\e[32mINTEGRATION-TESTS COMPLETED - ZERO ERRORS ;D "
 exit 0

@@ -1,13 +1,18 @@
 package io.pivotal.catalog.entities;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.RedisHash;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-@RedisHash("products")
+//@RedisHash("products")
+@Entity
 public class Product {
 
-    @Id String id;
+    @Id
+    String id;
     String name;
+
+    public Product() {
+    }
 
     public Product(String id, String name) {
         this.id = id;

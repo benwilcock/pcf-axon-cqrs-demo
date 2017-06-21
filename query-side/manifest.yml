@@ -6,4 +6,4 @@ applications:
     - rabbit
     - config
     - registry
-    - redis
+    - queryView
