@@ -54,8 +54,6 @@ jobs:
   - get: source-code
     trigger: true
     passed: [smoke-test-command-side, smoke-test-query-side]
-  - get: midday-weekdays
-    trigger: true
   - task: integration-test-both-sides
     file: source-code/ci/tasks/integration-test-both-sides.yml
     params:
@@ -80,13 +78,13 @@ resources:
     uri: https://github.com/benwilcock/pcf-axon-cqrs-demo
     branch: master
 
-- name: midday-weekdays
-  type: time
-  source:
-    start: 12:00 PM
-    stop: 1:00 PM
-    location: 	Europe/London
-    days: [Monday, Tuesday, Wednesday, Thursday, Friday]
+#- name: midday-weekdays
+#  type: time
+#  source:
+#    start: 12:00 PM
+#    stop: 1:00 PM
+#    location: 	Europe/London
+#    days: [Monday, Tuesday, Wednesday, Thursday, Friday]
 
 - name: push-to-pcf
   type: cf
