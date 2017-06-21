@@ -32,7 +32,7 @@ fi
 
 if curl -sL -w %{http_code} "$qryURL" -o /dev/null | grep "200"
 then
-    echo "[$qryURL] shows 'HTTP/1.1 200 OK' (as expected)."
+    echo "[$qryURL] shows 'HTTP/1.1 200 OK' (Expected)."
 else
     echo -e "\e[31mError. Query-side unresponsive. Failed to show '200 OK' on [$qryURL]"
     exit 1
@@ -45,15 +45,15 @@ export PRODUCT_ID=`curl -s -H "Content-Type:application/json" -d "{\"id\":\"${UU
 
 if [ "$PRODUCT_ID" = "$UUID" ]
 then
-    echo -e "[$cmdURL/add] for Product $UUID returned ID $PRODUCT_ID (as expected)."
+    echo -e "[$cmdURL/add] for Product $UUID returned $PRODUCT_ID (Expected)."
 else
     echo -e "\e[31mError. The Product ID $UUID wasn't returned as expected (got $PRODUCT_ID)! \e[0m"
     exit 1
 fi
 
-if curl -s ${qryURL}/products -o /dev/null | grep ${PRODUCT_ID}
+if curl -s ${qryURL}/products | grep ${PRODUCT_ID}
 then
-    echo "[$qryURL/products] had the product '$PRODUCT_ID' in the product list (as expected)."
+    echo "[$qryURL/products] had the product '$PRODUCT_ID' in the product list (Expected)."
 else
     echo -e "\e[31mError. Query-side failed to show product '$PRODUCT_ID' on [$qryURL]"
     exit 1
