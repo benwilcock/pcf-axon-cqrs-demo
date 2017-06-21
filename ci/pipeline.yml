@@ -5,7 +5,7 @@ jobs:
   plan:
   - get: source-code
     trigger: true
-  - get: timer
+  - get: midday-weekdays
     trigger: true
   - task: package-command-side
     file: source-code/ci/tasks/build-command-side.yml
@@ -19,7 +19,7 @@ jobs:
   plan:
   - get: source-code
     trigger: true
-  - get: timer
+  - get: midday-weekdays
     trigger: true
   - task: package-query-side
     file: source-code/ci/tasks/build-query-side.yml
@@ -34,7 +34,7 @@ jobs:
   - get: source-code
     trigger: true
     passed: [build-command-side]
-  - get: timer
+  - get: midday-weekdays
     trigger: true
     passed: [build-command-side]
   - task: smoke-test-command-side
@@ -52,7 +52,7 @@ jobs:
   - get: source-code
     trigger: true
     passed: [build-query-side]
-  - get: timer
+  - get: midday-weekdays
     trigger: true
     passed: [build-query-side]
   - task: smoke-test-query-side
@@ -70,7 +70,7 @@ jobs:
   - get: source-code
     trigger: true
     passed: [smoke-test-command-side, smoke-test-query-side]
-  - get: timer
+  - get: midday-weekdays
     trigger: true
     passed: [smoke-test-command-side, smoke-test-query-side]
   - task: integration-test-both-sides
@@ -97,9 +97,17 @@ resources:
     uri: https://github.com/benwilcock/pcf-axon-cqrs-demo
     branch: master
 
-- name: timer
+#- name: timer
+#  type: time
+#  source: {interval: 24h}
+
+- name: midday-weekdays
   type: time
-  source: {interval: 24h}
+  source:
+    start: 12:00 PM
+    stop: 1:00 PM
+    location: 	Europe/London
+    days: [Monday, Tuesday, Wednesday, Thursday, Friday]
 
 - name: push-to-pcf
   type: cf
