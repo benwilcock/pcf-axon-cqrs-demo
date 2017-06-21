@@ -2,6 +2,7 @@ applications:
 - name: pcf-axon-cqrs-demo-command-side
   path: build/libs/pcf-axon-cqrs-demo-command-side.jar
   memory: 1G
+  timeout: 120
   services:
     - eventStore
     - rabbit
