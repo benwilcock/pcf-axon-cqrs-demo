@@ -22,8 +22,9 @@ public class EventProcessor {
     }
 
     @EventHandler // Mark this method as an Axon Event Handler
-    public void on(ProductAddedEvent productAddedEvent) {
-        repo.save(new Product(productAddedEvent.getId(), productAddedEvent.getName()));
+    public Product on(ProductAddedEvent productAddedEvent) {
+        Product prod = repo.save(new Product(productAddedEvent.getId(), productAddedEvent.getName()));
         LOG.info("A product was added! Id={} Name={}", productAddedEvent.getId(), productAddedEvent.getName());
+        return prod;
     }
 }
