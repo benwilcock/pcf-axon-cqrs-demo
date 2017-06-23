@@ -16,9 +16,6 @@ jar {
     archiveName = 'pcf-axon-cqrs-demo-query-side.jar'
 }
 
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.8
-
 dependencies {
 
     // Bounded Context DRY files...
