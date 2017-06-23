@@ -56,39 +56,15 @@ public class TestRestWillGetServiceInformation {
     }
 
     @Test
-    public void testRestEndpoint() {
-
-        //Act
-        String body = testRestTemplate.getForObject("/rest", String.class);
-
-        //Assert
-        then(body).isEqualTo("{\"yourHostIs\":\"Test\",\"applicationName\":\"pcf-axon-cqrs-demo-command-side\"}");
-    }
-
-    @Test
     public void shouldReturn200WhenSendingRequestToController() throws Exception {
 
         //Act
         @SuppressWarnings("rawtypes")
-        ResponseEntity<Map> entity = this.testRestTemplate.getForEntity(
-                "http://localhost:" + this.port + "/rest", Map.class);
+        ResponseEntity<String> entity = this.testRestTemplate.getForEntity(
+                "http://localhost:" + this.port + "/", String.class);
 
         //Assert
         then(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
-    }
-
-    @Test
-    public void responseShouldHaveContent() throws Exception {
-
-        //Act
-        @SuppressWarnings("rawtypes")
-        ResponseEntity<Map> entity = this.testRestTemplate.getForEntity(
-                "http://localhost:" + this.port + "/rest", Map.class);
-
-        //Assert
-        then(entity.hasBody()).isTrue();
-        then(entity.getBody().containsKey("yourHostIs")).isTrue();
-        then(entity.getBody().get("yourHostIs")).isEqualTo("Test");
     }
 
     @Test

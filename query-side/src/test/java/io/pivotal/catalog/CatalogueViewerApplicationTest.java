@@ -40,7 +40,7 @@ import static org.assertj.core.api.BDDAssertions.then;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = CatalogueViewerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {"management.port=0", "your.host.is=Test"})
-public class CatalogueViewerApplicationLocalIntegrationTests {
+public class CatalogueViewerApplicationTest {
 
     @LocalServerPort
     private int port;
@@ -56,6 +56,18 @@ public class CatalogueViewerApplicationLocalIntegrationTests {
 
     @Test
     public void contextLoads() {
+    }
+
+    @Test
+    public void shouldReturn200WhenSendingRequestToController() throws Exception {
+
+        //Act
+        @SuppressWarnings("rawtypes")
+        ResponseEntity<String> entity = this.testRestTemplate.getForEntity(
+                "http://localhost:" + this.port + "/", String.class);
+
+        //Assert
+        then(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
     @Test
