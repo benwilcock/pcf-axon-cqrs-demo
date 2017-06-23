@@ -17,13 +17,14 @@ public interface ProductRepository extends CrudRepository<Product, String> {
 
     @Override
     @RestResource(exported = false)//true means the capability will be offered via REST
-    Product save(Product entity);
+    <S extends Product> S save(S entity);
 
     @Override
     @RestResource(exported = false)//false restricts the capability from the REST API
-    void delete(String aLong);
+    void delete(String id);
 
     @Override
     @RestResource(exported = false)
     void delete(Product entity);
+
 }
