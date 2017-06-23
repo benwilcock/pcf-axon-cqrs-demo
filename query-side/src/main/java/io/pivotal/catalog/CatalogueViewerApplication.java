@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @EnableDiscoveryClient
 @SpringBootApplication
-//@EnableRedisRepositories
 @EnableJpaRepositories
 public class CatalogueViewerApplication {
 
@@ -37,13 +36,6 @@ public class CatalogueViewerApplication {
         public String getView() {
             LOG.info("A request has been received for the Index page.");
             return "view";
-        }
-
-        @GetMapping("/stb")
-        public String crash() {
-            LOG.error("Had a crisis...   :(   ", new OutOfMemoryError("Threw a fake OutOfMemory error!!!"));
-            System.exit(-1);
-            return "dash";
         }
     }
 }

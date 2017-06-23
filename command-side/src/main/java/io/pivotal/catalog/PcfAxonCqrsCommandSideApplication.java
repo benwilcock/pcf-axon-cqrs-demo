@@ -28,57 +28,12 @@ public class PcfAxonCqrsCommandSideApplication {
 
     @RefreshScope
     @Controller
-    class DefaultController {
+    class MainController {
 
         @GetMapping("/")
         public String index() {
             LOG.info("A request has been received for the Index page.");
-            return "index";
-        }
-
-        @GetMapping("/dash")
-        public String dash() {
-            LOG.info("A request has been received for the Application Dashboard page.");
             return "dash";
-        }
-
-        @GetMapping("/stb")
-        public String stb() {
-            LOG.error("Had a crisis...   :(   ", new OutOfMemoryError("Threw a fake OutOfMemory error!!!"));
-            System.exit(-1);
-            return "index";
-        }
-    }
-
-
-    /**
-     * The @RestController annotation tells Spring to render the resulting string directly back to the caller.
-     *
-     * @return
-     */
-    @RefreshScope
-    @RestController
-    class TestRestController {
-
-        @Value("${spring.application.name}")
-        String appName;
-
-        @Value("${your.host.is:Aurora}")
-        String hostName;
-
-        /**
-         * The @RequestMapping annotation provides “routing” information.
-         *
-         * @return
-         */
-        @RequestMapping("/rest")
-        public Map<String, String> get() {
-            LOG.info("A request has been received for the /rest endpoint.");
-            Map<String, String> data = new HashMap<String, String>();
-            data.put("applicationName", appName);
-            data.put("yourHostIs", hostName);
-            LOG.debug("Returning {}.", data.toString());
-            return data;
         }
     }
 }
