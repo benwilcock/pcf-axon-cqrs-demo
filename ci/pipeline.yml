@@ -1,11 +1,51 @@
 ---
 jobs:
+
+- name: increase-major
+  serial: true
+  plan:
+  - put: version
+    params: { bump: major }
+
+- name: increase-minor
+  serial: true
+  plan:
+  - put: version
+    params: { bump: minor }
+
+- name: increase-patch
+  serial: true
+  plan:
+  - put: version
+    params: { bump: patch }
+
+#- name: job-versioning
+#  public: true
+#  serial: true
+#  plan:
+#    - get: version
+#      params: {bump: patch}
+##    - task: display-version
+##      config:
+##        platform: linux
+##        image_resource:
+##          type: docker-image
+##          source: {repository: busybox}
+##        inputs:
+##        - name: version
+##        run:
+##          path: catgit
+##          args: [version/number]
+#    - put: version
+#      params: {file: version/number}
+
 - name: build-command-side
   public: false
   plan:
   - get: source-code
     trigger: true
-    version: latest
+  - get: version
+    trigger: true
   - task: package-command-side
     file: source-code/ci/tasks/build-command-side.yml
   - put: push-to-pcf
@@ -18,7 +58,8 @@ jobs:
   plan:
   - get: source-code
     trigger: true
-    version: latest
+  - get: version
+    trigger: true
   - task: package-query-side
     file: source-code/ci/tasks/build-query-side.yml
   - put: push-to-pcf
@@ -32,6 +73,9 @@ jobs:
   - get: source-code
     trigger: true
     passed: [build-command-side]
+  - get: version
+    trigger: true
+    passed: [build-command-side]
   - task: smoke-test-command-side
     file: source-code/ci/tasks/smoke-test-command-side.yml
     params:
@@ -41,6 +85,9 @@ jobs:
   public: false
   plan:
   - get: source-code
+    trigger: true
+    passed: [build-query-side]
+  - get: version
     trigger: true
     passed: [build-query-side]
   - task: smoke-test-query-side
@@ -54,15 +101,24 @@ jobs:
   - get: source-code
     trigger: true
     passed: [smoke-test-command-side, smoke-test-query-side]
+  - get: version
+    trigger: true
+    passed: [smoke-test-command-side, smoke-test-query-side]
   - task: integration-test-both-sides
     file: source-code/ci/tasks/integration-test-both-sides.yml
     params:
       cmdURL: {{cf-cmd-app-url}}
       qryURL: {{cf-qry-app-url}}
-  - put: slack-alert
-    params:
-      text: |
-        CQRS INTEGRATION TEST PASSED in Job "$BUILD_JOB_NAME" for Pipeline "$BUILD_PIPELINE_NAME"!
+    on_success:
+      put: slack-alert
+      params:
+        text: |
+          CQRS INTEGRATION TEST PASSED in Job "$BUILD_JOB_NAME" for Pipeline "$BUILD_PIPELINE_NAME"!
+    on_failure:
+      put: slack-alert
+      params:
+        text: |
+          CQRS INTEGRATION TEST FAILED in Job "$BUILD_JOB_NAME" for Pipeline "$BUILD_PIPELINE_NAME"!
 
 resource_types:
 - name: slack-notification
@@ -75,7 +131,7 @@ resources:
 - name: source-code
   type: git
   source:
-    uri: https://github.com/benwilcock/pcf-axon-cqrs-demo
+    uri: https://github.com/benwilcock/pcf-axon-cqrs-demo.git
     branch: master
 
 #- name: midday-weekdays
@@ -101,3 +157,13 @@ resources:
   source:
     url: {{webhook}}
     insecure: true
+
+- name: version
+  type: semver
+  source:
+    initial_version: 0.0.0
+    driver: git
+    uri: {{git-uri}}
+    branch: version
+    file: version
+    private_key: {{git-private-key}}
