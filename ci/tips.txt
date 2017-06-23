@@ -11,3 +11,20 @@ fly -t wings set-pipeline -p bw-pcf-axon-cqrs-demo -c ci/pipeline.yml -l ci/priv
 fly -t wings unpause-pipeline -p bw-pcf-axon-cqrs-demo
 fly -t wings containers
 fly -t wings trigger-job -j bw-pcf-axon-cqrs-demo/build-command-side
+
+ssh-keygen -t rsa -b 4096 -C "myemail@server.com"
+sh-agent -s
+ssh-add -K ~/.ssh/id_rsa
+pbcopy < ~/.ssh/id_rsa
+pbcopy < ~/.ssh/id_rsa.pub
+ssh -T git@github.com
+
+git stash
+git stash list
+git stash apply
+git merge redis-repo
+git push origin --delete redis-repo
+git fetch --all --prune
+
+
+
