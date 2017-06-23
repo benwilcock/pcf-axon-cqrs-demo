@@ -22,7 +22,7 @@ public class CatalogService {
     }
 
     public CompletableFuture<String> addProductToCatalog(AddProductToCatalogCommand command){
-        LOG.debug("Processing AddProductToCatalogCommand command id={} name={}.", command.getId(), command.getName());
+        LOG.debug("Processing AddProductToCatalogCommand command: {}", command);
         return this.commandGateway.send(command);
     }
 }

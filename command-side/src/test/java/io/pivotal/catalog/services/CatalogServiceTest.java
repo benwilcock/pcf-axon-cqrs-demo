@@ -15,13 +15,12 @@ import java.util.concurrent.CompletableFuture;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
-public class TestServiceCallsAxonCommandGateway {
+public class CatalogServiceTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TestServiceCallsAxonCommandGateway.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CatalogServiceTest.class);
 
     private String id;
     private String name;
@@ -42,15 +41,23 @@ public class TestServiceCallsAxonCommandGateway {
     }
 
     @Test
-    public void testApi()throws Exception {
+    public void testApi() throws Exception {
         //Arrange
-        when(commandGateway.send(any())).thenReturn(CompletableFuture.supplyAsync(this::getId));
+        when(commandGateway.send(any()))
+                .thenAnswer(i -> {
+                    AddProductToCatalogCommand command = i.getArgumentAt(0, AddProductToCatalogCommand.class);
+                    assertEquals(id, command.getId());
+                    CompletableFuture<String> response = new CompletableFuture<String>();
+                    response.complete(command.getId());
+                    return response;
+                });
 
         //Act
         CompletableFuture<String> response = service.addProductToCatalog(command);
 
         //Assert
-        verify(commandGateway).send(any());
+        verify(commandGateway, times(1)).send(any());
+        verifyNoMoreInteractions(commandGateway);
         assertEquals(id, response.get().toString());
     }
 

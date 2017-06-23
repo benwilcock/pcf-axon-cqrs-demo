@@ -15,7 +15,6 @@
  */
 package io.pivotal.catalog;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Map;
@@ -39,7 +37,7 @@ import static org.assertj.core.api.BDDAssertions.then;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = CatalogueViewerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestPropertySource(properties = {"management.port=0", "your.host.is=Test"})
+//@TestPropertySource(properties = {"management.port=0"})
 public class CatalogueViewerApplicationTest {
 
     @LocalServerPort
@@ -47,9 +45,6 @@ public class CatalogueViewerApplicationTest {
 
     @Value("${local.management.port}")
     private int mgt;
-
-    @Value("${your.host.is}")
-    String hostName;
 
     @Autowired
     private TestRestTemplate testRestTemplate;

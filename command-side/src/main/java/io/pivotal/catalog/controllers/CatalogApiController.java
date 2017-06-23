@@ -30,12 +30,9 @@ public class CatalogApiController implements CatalogApi {
     @PostMapping("/add")
     public CompletableFuture<String> addProductToCatalog(@RequestBody Map<String, String> request) {
 
-        LOG.info("Adding Product to Catalog: {}, {}", request.get("id"), request.get("name"));
-
-        return catalogService.addProductToCatalog(new AddProductToCatalogCommand(
-                request.get("id"),
-                request.get("name")
-        ));
+        AddProductToCatalogCommand command = new AddProductToCatalogCommand(request.get("id"), request.get("name"));
+        LOG.info("Executing command: {}", command);
+        return catalogService.addProductToCatalog(command);
     }
 }
 

@@ -53,8 +53,7 @@ public class EventProcessorTest {
         processor.on(event);
 
         // Assert
-        verify(repo, atLeastOnce()).save(any(Product.class));
-        verify(repo, atMost(1)).save(any(Product.class));
+        verify(repo, times(1)).save(any(Product.class));
         verifyNoMoreInteractions(repo);
         Assert.assertEquals(products.get(0).getId(), uuid);
         Assert.assertEquals(products.get(0).getName(), name);
