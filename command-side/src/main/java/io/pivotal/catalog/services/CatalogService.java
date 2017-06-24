@@ -1,9 +1,9 @@
 package io.pivotal.catalog.services;
 
 import io.pivotal.catalog.commands.AddProductToCatalogCommand;
+import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

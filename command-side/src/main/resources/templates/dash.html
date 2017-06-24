@@ -36,10 +36,10 @@ Font Segoe UI-->
         <div class="w3-center">
             <p th:text="'Application Name: ' + ${@environment.getProperty('spring.application.name')}"/>
             <p th:each="activeprofile : ${@environment.getActiveProfiles()}"  th:text="'Active Config Profile: '+${activeprofile}"/>
-            <p th:text="'Build Version: ' + ${@buildProperties.getVersion()}"/>
-            <p th:text="'Build Date: ' + ${@buildProperties.getTime()}"/>
-            <p th:text="'Build Branch: ' + ${@gitProperties.getBranch()}"/>
-            <p th:text="'Build Commit Id: ' + ${@gitProperties.getCommitId()}"/>
+            <!--<p th:text="'Build Version: ' + ${@buildProperties.getVersion()}"/>-->
+            <!--<p th:text="'Build Date: ' + ${@buildProperties.getTime()}"/>-->
+            <!--<p th:text="'Build Branch: ' + ${@gitProperties.getBranch()}"/>-->
+            <!--<p th:text="'Build Commit Id: ' + ${@gitProperties.getCommitId()}"/>-->
             <p th:text="'Internal Port: ' + ${@environment.getProperty('local.server.port')}"/>
             <p th:text="'Operating System: ' + ${@environment.getProperty('os.name')}"/>
             <p th:text="'Java Runtime: ' + ${@environment.getProperty('java.runtime.name')}"/>
