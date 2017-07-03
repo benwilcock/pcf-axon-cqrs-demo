@@ -22,19 +22,19 @@ fi
 
 # Make sure the homepage shows...
 
-if curl -sL -w %{http_code} "$cmdURL" -o /dev/null | grep "200"
+if curl -sL -w %{http_code} "$cmdURL/info" -o /dev/null | grep "200"
 then
-    echo "[$cmdURL] shows 'HTTP/1.1 200 OK' (as expected)."
+    echo "[$cmdURL/info] shows 'HTTP/1.1 200 OK' (as expected)."
 else
-    echo -e "\e[31mError. Command-side unresponsive. Failed to show '200 OK' on [$cmdURL]"
+    echo -e "\e[31mError. Command-side unresponsive. Failed to show '200 OK' on [$cmdURL/info]"
     exit 1
 fi
 
-if curl -sL -w %{http_code} "$qryURL" -o /dev/null | grep "200"
+if curl -sL -w %{http_code} "$qryURL/info" -o /dev/null | grep "200"
 then
-    echo "[$qryURL] shows 'HTTP/1.1 200 OK' (Expected)."
+    echo "[$qryURL/info] shows 'HTTP/1.1 200 OK' (Expected)."
 else
-    echo -e "\e[31mError. Query-side unresponsive. Failed to show '200 OK' on [$qryURL]"
+    echo -e "\e[31mError. Query-side unresponsive. Failed to show '200 OK' on [$qryURL/info]"
     exit 1
 fi
 
@@ -43,6 +43,8 @@ fi
 export UUID=`uuid`
 export PRODUCT_ID=`curl -s -H "Content-Type:application/json" -d "{\"id\":\"${UUID}\", \"name\":\"test-${UUID}\"}" ${cmdURL}/add`
 
+# Add a Product using a command...
+
 if [ "$PRODUCT_ID" = "$UUID" ]
 then
     echo -e "[$cmdURL/add] for Product $UUID returned $PRODUCT_ID (Expected)."
@@ -50,6 +52,8 @@ else
     echo -e "\e[31mError. Add Command Failed. The Product ID $UUID wasn't returned as expected (got $PRODUCT_ID)! \e[0m"
     exit 1
 fi
+
+# List app the products and expect our new one to be there...
 
 if curl -s ${qryURL}/products | grep test-${PRODUCT_ID}
 then
