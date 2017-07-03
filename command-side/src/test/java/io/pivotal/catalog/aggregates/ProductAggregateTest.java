@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import java.util.UUID;
 
-public class TestProductAggregate {
+public class ProductAggregateTest {
 
     private FixtureConfiguration fixture;
     private String id;

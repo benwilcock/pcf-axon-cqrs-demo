@@ -1,6 +1,5 @@
 package io.pivotal.catalog.controllers;
 
-import io.pivotal.catalog.api.CatalogApi;
 import io.pivotal.catalog.commands.AddProductToCatalogCommand;
 import io.pivotal.catalog.services.CatalogService;
 import org.slf4j.Logger;
@@ -15,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
 
 
 @RestController
-public class CatalogApiController implements CatalogApi {
+public class CatalogApiController {
 
     private static final Logger LOG = LoggerFactory.getLogger(CatalogApiController.class);
 
@@ -26,7 +25,6 @@ public class CatalogApiController implements CatalogApi {
         this.catalogService = commandGateway;
     }
 
-    @Override
     @PostMapping("/add")
     public CompletableFuture<String> addProductToCatalog(@RequestBody Map<String, String> request) {
 

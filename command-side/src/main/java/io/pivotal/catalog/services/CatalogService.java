@@ -7,10 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class CatalogService {
+public class CatalogService{
 
     private static final Logger LOG = LoggerFactory.getLogger(CatalogService.class);
 
@@ -21,7 +22,7 @@ public class CatalogService {
         this.commandGateway = commandGateway;
     }
 
-    public CompletableFuture<String> addProductToCatalog(AddProductToCatalogCommand command){
+    public CompletableFuture<String> addProductToCatalog(AddProductToCatalogCommand command) {
         LOG.debug("Processing AddProductToCatalogCommand command: {}", command);
         return this.commandGateway.send(command);
     }

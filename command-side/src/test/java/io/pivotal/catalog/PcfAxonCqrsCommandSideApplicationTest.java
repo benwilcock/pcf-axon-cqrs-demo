@@ -43,18 +43,6 @@ public class PcfAxonCqrsCommandSideApplicationTest {
     }
 
     @Test
-    public void shouldReturn200WhenSendingRequestToController() throws Exception {
-
-        //Act
-        @SuppressWarnings("rawtypes")
-        ResponseEntity<String> entity = this.testRestTemplate.getForEntity(
-                "http://localhost:" + this.port + "/", String.class);
-
-        //Assert
-        then(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
-    }
-
-    @Test
     public void shouldReturn200WhenSendingRequestToActuatorInfoEndpoint() throws Exception {
         @SuppressWarnings("rawtypes")
         ResponseEntity<Map> entity = this.testRestTemplate.getForEntity(
