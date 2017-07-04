@@ -42,52 +42,43 @@ else
     exit 1
 fi
 
-# Make sure the homepage shows there is a DataBase Service bound...
-#if curl -s "$URL/dash" | grep "MySQL"
-#then
-#    echo "The website [$URL/dash] shows 'MySQL' (as expected)."
-#else
-#    echo -e "\e[31mError. Not showing 'MySQL' on [$URL/dash]"
-#    exit 1
-#fi
+# Make sure the homepage shows there is a Config Service bound...
 
-# Make sure the homepage shows there is a Messaging Service bound...
-
-if curl -s "$URL" | grep "Rabbit MQ"
+if curl -s "$URL/health" | grep "configServer"
 then
-    echo "The website [$URL] shows 'Rabbit MQ' (as expected)."
+    echo "The website [$URL/health] shows 'configServer' (as expected)."
 else
-    echo -e "\e[31mError. Not showing 'Rabbit MQ' on [$URL]"
+    echo -e "\e[31mError. Not showing 'configServer' on [$URL/health]"
     exit 1
 fi
 
-# Make sure the homepage shows there is a Config Service bound...
+# Make sure the homepage shows there is a DB Service bound...
 
-if curl -s "$URL" | grep "Config Server"
+if curl -s "$URL/health" | grep "db"
 then
-    echo "The website [$URL] shows 'Config Server' (as expected)."
+    echo "The website [$URL/health] shows 'db' (as expected)."
 else
-    echo -e "\e[31mError. Not showing 'Config Server' on [$URL]"
+    echo -e "\e[31mError. Not showing 'db' on [$URL/health]"
     exit 1
 fi
 
 # Make sure the homepage shows there is a Registry Service bound...
 
-if curl -s "$URL" | grep "Service Registry"
+if curl -s "$URL/health" | grep "eureka"
 then
-    echo "The website [$URL] shows 'Service Registry' (as expected)."
+    echo "The website [$URL/health] shows 'eureka' (as expected)."
 else
-    echo -e "\e[31mError. Not showing 'Service Registry' on [$URL]"
+    echo -e "\e[31mError. Not showing 'eureka' on [$URL/health]"
     exit 1
 fi
 
-# Make sure on the homepage the host name is set correctly - this means Config server integration is OK
+# Make sure the homepage shows there is a Registry Service bound...
 
-if curl -s "$URL" | grep "Your host today was: Aurora"
+if curl -s "$URL/health" | grep "rabbit"
 then
-    echo -e "The page [$URL/dash] shows 'Your host today was: Aurora' (as expected, Spring Config Server integration is working)."
+    echo "The website [$URL/health] shows 'rabbit' (as expected)."
 else
-    echo -e "\e[31mError. Not showing 'Your host today was: Aurora' on [$URL] - Integration of Spring Config Server has regressed or failed...\e[0m"
+    echo -e "\e[31mError. Not showing 'rabbit' on [$URL/health]"
     exit 1
 fi
 

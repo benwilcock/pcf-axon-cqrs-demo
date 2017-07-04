@@ -42,6 +42,47 @@ else
     exit 1
 fi
 
+# Make sure the homepage shows there is a Config Service bound...
+
+if curl -s "$URL/health" | grep "configServer"
+then
+    echo "The website [$URL/health] shows 'configServer' (as expected)."
+else
+    echo -e "\e[31mError. Not showing 'configServer' on [$URL/health]"
+    exit 1
+fi
+
+# Make sure the homepage shows there is a DB Service bound...
+
+if curl -s "$URL/health" | grep "db"
+then
+    echo "The website [$URL/health] shows 'db' (as expected)."
+else
+    echo -e "\e[31mError. Not showing 'db' on [$URL/health]"
+    exit 1
+fi
+
+# Make sure the homepage shows there is a Registry Service bound...
+
+if curl -s "$URL/health" | grep "eureka"
+then
+    echo "The website [$URL/health] shows 'eureka' (as expected)."
+else
+    echo -e "\e[31mError. Not showing 'eureka' on [$URL/health]"
+    exit 1
+fi
+
+# Make sure the homepage shows there is a Registry Service bound...
+
+if curl -s "$URL/health" | grep "rabbit"
+then
+    echo "The website [$URL/health] shows 'rabbit' (as expected)."
+else
+    echo -e "\e[31mError. Not showing 'rabbit' on [$URL/health]"
+    exit 1
+fi
+
+
 # Add a Product using the /add REST endpoint
 
 export UUID=`uuid`
