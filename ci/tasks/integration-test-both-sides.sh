@@ -53,7 +53,7 @@ else
     exit 1
 fi
 
-# List app the products and expect our new one to be there...
+# List all the products, expect our new Product to be there in the list...
 
 if curl -s ${qryURL}/products | grep test-${PRODUCT_ID}
 then
