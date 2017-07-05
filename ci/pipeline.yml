@@ -1,31 +1,39 @@
 ---
 jobs:
 
-- name: increase-major
-  serial: true
+- name: just-build-it
   plan:
-  - put: version
-    params: { bump: major }
+  - get: manualtrigger
+    trigger: false
 
-- name: increase-minor
-  serial: true
-  plan:
-  - put: version
-    params: { bump: minor }
-
-- name: increase-patch
-  serial: true
-  plan:
-  - put: version
-    params: { bump: patch }
+#- name: increase-major
+#  serial: true
+#  plan:
+#  - put: version
+#    params: { bump: major }
+#
+#- name: increase-minor
+#  serial: true
+#  plan:
+#  - put: version
+#    params: { bump: minor }
+#
+#- name: increase-patch
+#  serial: true
+#  plan:
+#  - put: version
+#    params: { bump: patch }
 
 - name: build-command-side
   public: false
   plan:
+  - get: manualtrigger
+    trigger: true
+    passed: [just-build-it]
   - get: source-code
     trigger: true
-  - get: version
-    trigger: true
+#  - get: version
+#    trigger: true
   - task: package-command-side
     file: source-code/ci/tasks/build-command-side.yml
   - put: push-to-pcf
@@ -36,10 +44,13 @@ jobs:
 - name: build-query-side
   public: false
   plan:
+  - get: manualtrigger
+    trigger: true
+    passed: [just-build-it]
   - get: source-code
     trigger: true
-  - get: version
-    trigger: true
+#  - get: version
+#    trigger: true
   - task: package-query-side
     file: source-code/ci/tasks/build-query-side.yml
   - put: push-to-pcf
@@ -50,12 +61,15 @@ jobs:
 - name: smoke-test-command-side
   public: false
   plan:
+  - get: manualtrigger
+    trigger: true
+    passed: [build-command-side]
   - get: source-code
     trigger: true
     passed: [build-command-side]
-  - get: version
-    trigger: true
-    passed: [build-command-side]
+#  - get: version
+#    trigger: true
+#    passed: [build-command-side]
   - task: smoke-test-command-side
     file: source-code/ci/tasks/smoke-test-command-side.yml
     params:
@@ -64,12 +78,15 @@ jobs:
 - name: smoke-test-query-side
   public: false
   plan:
+  - get: manualtrigger
+    trigger: true
+    passed: [build-query-side]
   - get: source-code
     trigger: true
     passed: [build-query-side]
-  - get: version
-    trigger: true
-    passed: [build-query-side]
+#  - get: version
+#    trigger: true
+#    passed: [build-query-side]
   - task: smoke-test-query-side
     file: source-code/ci/tasks/smoke-test-query-side.yml
     params:
@@ -78,12 +95,15 @@ jobs:
 - name: integration-test-both-sides
   public: false
   plan:
+  - get: manualtrigger
+    trigger: true
+    passed: [smoke-test-command-side, smoke-test-query-side]
   - get: source-code
     trigger: true
     passed: [smoke-test-command-side, smoke-test-query-side]
-  - get: version
-    trigger: true
-    passed: [smoke-test-command-side, smoke-test-query-side]
+#  - get: version
+#    trigger: true
+#    passed: [smoke-test-command-side, smoke-test-query-side]
   - task: integration-test-both-sides
     file: source-code/ci/tasks/integration-test-both-sides.yml
     params:
@@ -101,6 +121,7 @@ jobs:
           CQRS INTEGRATION TEST FAILED in Job "$BUILD_JOB_NAME" for Pipeline "$BUILD_PIPELINE_NAME"!
 
 resource_types:
+
 - name: slack-notification
   type: docker-image
   source:
@@ -108,6 +129,11 @@ resource_types:
     tag: latest
 
 resources:
+
+- name: manualtrigger
+  type: time           # technique to trigger and propagate manual execution through pipeline
+  source: {interval: 1m}
+
 - name: source-code
   type: git
   source:
@@ -138,12 +164,12 @@ resources:
     url: {{webhook}}
     insecure: true
 
-- name: version
-  type: semver
-  source:
-    initial_version: 0.0.0
-    driver: git
-    uri: {{git-uri}}
-    branch: version
-    file: version
-    private_key: {{git-private-key}}
+#- name: version
+#  type: semver
+#  source:
+#    initial_version: 0.0.0
+#    driver: git
+#    uri: {{git-uri}}
+#    branch: version
+#    file: version
+#    private_key: {{git-private-key}}
