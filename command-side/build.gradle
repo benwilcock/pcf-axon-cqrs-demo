@@ -24,12 +24,10 @@ dependencies {
 	// Spring Web
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
-    compile("org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}")
-    compile("org.springframework.boot:spring-boot-devtools:${springBootVersion}")
 
     // Data and Database
 	compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
-	compile('com.h2database:h2')
+	// compile('com.h2database:h2')
 
     // Messaging
     compile("org.springframework.boot:spring-boot-starter-amqp:${springBootVersion}")

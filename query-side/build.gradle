@@ -24,8 +24,6 @@ dependencies {
 	// Spring Web
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
-    compile("org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}")
-    compile("org.springframework.boot:spring-boot-devtools:${springBootVersion}")
 
     //
     compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
@@ -37,9 +35,9 @@ dependencies {
     // Spring Cloud
     compile("io.pivotal.spring.cloud:spring-cloud-services-starter-config-client")
     compile("io.pivotal.spring.cloud:spring-cloud-services-starter-service-registry")
-    compile("org.springframework.cloud:spring-cloud-starter-sleuth")
-    compile("org.springframework.cloud:spring-cloud-stream-binder-rabbit")
-    compile("org.springframework.cloud:spring-cloud-sleuth-zipkin-stream")
+//    compile("org.springframework.cloud:spring-cloud-starter-sleuth")
+//    compile("org.springframework.cloud:spring-cloud-stream-binder-rabbit")
+//    compile("org.springframework.cloud:spring-cloud-sleuth-zipkin-stream")
 
     // Axon CQRS / ES Framework
     compile("org.axonframework:axon-spring-boot-starter:${axonVersion}")
