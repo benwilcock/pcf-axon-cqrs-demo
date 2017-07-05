@@ -4,7 +4,6 @@ import io.pivotal.catalog.commands.AddProductToCatalogCommand;
 import io.pivotal.catalog.services.CatalogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +19,6 @@ public class CatalogApiController {
 
     private final CatalogService catalogService;
 
-    @Autowired
     public CatalogApiController(CatalogService commandGateway) {
         this.catalogService = commandGateway;
     }

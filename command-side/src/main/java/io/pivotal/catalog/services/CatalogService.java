@@ -4,10 +4,8 @@ import io.pivotal.catalog.commands.AddProductToCatalogCommand;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -17,7 +15,6 @@ public class CatalogService{
 
     private final CommandGateway commandGateway;
 
-    @Autowired
     public CatalogService(CommandGateway commandGateway) {
         this.commandGateway = commandGateway;
     }
