@@ -3,7 +3,6 @@ package io.pivotal.catalog.entities;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-//@RedisHash("products")
 @Entity
 public class Product {
 

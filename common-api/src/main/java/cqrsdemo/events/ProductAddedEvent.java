@@ -3,7 +3,7 @@ package cqrsdemo.events;
 /**
  * Created by benwilcock on 18/04/2017.
  */
-public class ProductAddedEvent extends AbstractEvent{
+public class ProductAddedEvent extends AbstractEvent {
 
     private String name;
 
