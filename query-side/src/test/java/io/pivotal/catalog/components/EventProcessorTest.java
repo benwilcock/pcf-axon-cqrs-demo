@@ -1,8 +1,7 @@
 package io.pivotal.catalog.components;
 
-
-import cqrsdemo.events.ProductAddedEvent;
 import io.pivotal.catalog.entities.Product;
+import io.pivotal.catalog.events.ProductAddedEvent;
 import io.pivotal.catalog.repositories.ProductRepository;
 import org.junit.Assert;
 import org.junit.Before;

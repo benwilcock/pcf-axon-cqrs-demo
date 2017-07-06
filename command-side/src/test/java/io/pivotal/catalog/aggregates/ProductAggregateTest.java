@@ -1,7 +1,7 @@
 package io.pivotal.catalog.aggregates;
 
-import cqrsdemo.events.ProductAddedEvent;
 import io.pivotal.catalog.commands.AddProductToCatalogCommand;
+import io.pivotal.catalog.events.ProductAddedEvent;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.FixtureConfiguration;
 import org.junit.Before;

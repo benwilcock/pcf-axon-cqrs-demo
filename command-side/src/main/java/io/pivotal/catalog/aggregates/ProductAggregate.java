@@ -1,7 +1,7 @@
 package io.pivotal.catalog.aggregates;
 
-import cqrsdemo.events.ProductAddedEvent;
 import io.pivotal.catalog.commands.AddProductToCatalogCommand;
+import io.pivotal.catalog.events.ProductAddedEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.AggregateIdentifier;
 import org.axonframework.eventsourcing.EventSourcingHandler;
