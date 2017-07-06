@@ -1,3 +1,0 @@
-jar {
-    baseName = 'common-api'
-}
