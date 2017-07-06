@@ -1,4 +1,0 @@
-fly -t local login -c http://localhost:8000
-fly -t local set-pipeline -p pcf-cqrs-demo -c ci/pipeline.yml -l ci/private.yml
-fly -t local unpause-pipeline -p pcf-cqrs-demo
-fly -t local trigger-job -j pcf-cqrs-demo/test
