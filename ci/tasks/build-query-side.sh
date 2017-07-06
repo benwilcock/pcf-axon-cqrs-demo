@@ -4,7 +4,7 @@ set -e +x
 
 pushd source-code
   echo "Testing and Packaging the query-side JAR"
-  ./gradlew common-api:test query-side:build
+  ./gradlew query-side:build
 popd
 
 jar_count=`find source-code/query-side/build/libs -type f -name *.jar | wc -l`

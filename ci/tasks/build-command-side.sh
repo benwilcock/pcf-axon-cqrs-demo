@@ -4,7 +4,7 @@ set -e +x
 
 pushd source-code
   echo "Testing and Packaging the command-side JAR"
-  ./gradlew common-api:test command-side:build
+  ./gradlew command-side:build
 popd
 
 jar_count=`find source-code/command-side/build/libs -type f -name *.jar | wc -l`
