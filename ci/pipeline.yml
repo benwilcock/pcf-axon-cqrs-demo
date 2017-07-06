@@ -26,6 +26,7 @@ jobs:
 
 - name: build-command-side
   public: false
+  serial: true
   plan:
   - get: manualtrigger
     trigger: true
@@ -42,6 +43,7 @@ jobs:
       path: package-output/pcf-axon-cqrs-demo-command-side.jar
 
 - name: build-query-side
+  serial: true
   public: false
   plan:
   - get: manualtrigger
@@ -59,6 +61,7 @@ jobs:
       path: package-output/pcf-axon-cqrs-demo-query-side.jar
 
 - name: smoke-test-command-side
+  serial: true
   public: false
   plan:
   - get: manualtrigger
@@ -76,6 +79,7 @@ jobs:
       URL: {{cf-cmd-app-url}}
 
 - name: smoke-test-query-side
+  serial: true
   public: false
   plan:
   - get: manualtrigger
@@ -93,6 +97,7 @@ jobs:
       URL: {{cf-qry-app-url}}
 
 - name: integration-test-both-sides
+  serial: true
   public: false
   plan:
   - get: manualtrigger
