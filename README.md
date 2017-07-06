@@ -1,14 +1,20 @@
 # CQRS and Event Sourcing on Pivotal Cloud Foundry
 
-This project demonstrates the the use of CQRS and Event Sourcing with Pivotal Cloud Foundry. It contains two Spring Boot applications built using the excellent Axon Framework (Version 3). This demo was inspired by a webinar given by Josh Long of Pivotal and Allard Buijze of Trifork. [You can view the whole thing on Youtube](https://youtu.be/Jp-rW-XOYzA).
+This project demonstrates the the use of CQRS and Event Sourcing with Pivotal Cloud Foundry. It contains two Spring Boot applications built using the excellent Axon Framework (Version 3). There are two applications in this project because the command-and-query-responsibility-separation has been implemented quite literally in the code by splitting the *command-side* from the *query-side*. 
+
+This demo was inspired by a webinar given by [Josh Long](https://twitter.com/starbuxman) of Pivotal and [Allard Buijze](https://twitter.com/allardbz) of Trifork. [You can view the whole thing on Youtube](https://youtu.be/Jp-rW-XOYzA).
 
 **This particular demo ONLY runs on CloudFoundry!**
 
-## Before You Begin
+## Before You Begin.
 
-This demo will *only* run in a Cloud Foundry environment such as Pivotal Web Services (PWS) or PCFDev. If you don't have a PWS account, [you can sign up for a free](https://run.pivotal.io). If you do have a PWS account, check you haven't reached your quota, or tidy up if you have. 
+This demo will *only* run in a Cloud Foundry environment such as Pivotal Web Services (PWS) or PCF-Dev. If you don't have a PWS account, [you can sign up for one for free](https://run.pivotal.io). If you do have a PWS account, check you haven't reached your quota, or tidy up your space if you have. 
 
-This demo also needs certain CloudFoundry marketplace services to be available in the space where you want to `cf push` the applications. The services required are MySQL, RabbitMQ, Spring Cloud Config and Spring Cloud Registry. 
+Clone this repository and go to it's directory in your terminal.
+
+## Setting Up Your Cloud Foundry Space.
+
+This demo needs certain CloudFoundry marketplace services to be available in the space where you want to `cf push` the applications. The services required are MySQL, RabbitMQ, Spring Cloud Config and Spring Cloud Registry. 
 
 To set up these marketplace services, login to CloudFoundry with your local CloudFoundry CLI client. [Download the the 'cf-cli' and install it if you havn't used it before](https://github.com/cloudfoundry/cli).
 
@@ -18,7 +24,7 @@ $ cf login -a api.run.pivotal.io
 
 When logging in, be sure to choose an 'Org' and 'Space' with ample quota.
 
-Now we're logged in, we can setup the supporting services required for our apps. Use the commands below to create services for MySQL, RabbitMQ, Spring Cloud Registry and Spring Cloud Config. Note that the Config server needs to know where it's config is being stored. A setup file has been provided in the root of this project that contains [the location](https://github.com/benwilcock/app-config).
+Now we're logged in, we can setup the supporting services required for our apps. Use the commands below to instantly self-provision services for *MySQL*, *RabbitMQ*, *Spring Cloud Registry* and *Spring Cloud Config*. Note that the Config server will need to know where to get it's config from. A setup file has been provided in the root of this project that contains [the location](https://github.com/benwilcock/app-config).
 
 ````bash
 $ cf create-service cleardb spark mysql
@@ -27,18 +33,20 @@ $ cf create-service p-service-registry standard registry
 $ cf create-service p-config-server standard config -c config-server-setup.json
 ````
 
-A quick call to `cf services` should list all four of these application services (rabbit, mysql, registry and config). They will now be available to the applications in the targeted space.
+A quick call to `cf services` should list all four of these application services (rabbit, mysql, registry and config). They will now be availablefor use by the applications in the targeted space.
 
-Now we're ready to compile the code and push the resulting Java JAR to CloudFoundry. From the project root folder, use Gradle Wrapper to build the code and the cf-cli to push it to CloudFoundry as follows...
+## Build & Deploy the Applications.
+
+Now that's done we're ready to compile the code and push the resulting Java JAR to CloudFoundry. From the project root folder, use Gradle Wrapper to build the code and the cf-cli to push the code to CloudFoundry as follows...
 
 ````bash
 $ ./gradlew build
 $ cf push
 ````
 
-This will compile and push two seperate application JAR files. One application deals with the *commands* in the domain and emits *events*, and the other listens to the events and builds a read-only *view* (sometimes called a *projection*).
+This will compile and push two seperate application JAR files using a CloudFoundry `manifest.yml` that has also been provided. Once deployed to Cloud Foundry, the **command-side** application deals with the *commands* in the domain and emits *events*, and the **query-side** application listens for events and builds a read-only *view* (sometimes called a *projection*) based on the events it receives.
 
-Once the applications are pushed, you can list the apps and find our their URL's using the cf-cli.
+Once the applications are pushed, you can list the apps to find out their URL's. Make a note of them, you'll need these URL's when integration testing the application in the next section.
 
 ````bash
 $ cf apps
@@ -48,33 +56,37 @@ pcf-axon-cqrs-demo-command-side    started           1/1         1G       1G    
 pcf-axon-cqrs-demo-query-side      started           1/1         1G       1G     pcf-axon-cqrs-demo-query-side.cfapps.io
 ````
 
-You'll need these URL's to test the application is working. 
+## Integration Testing The Application.
 
-
-## Testing the application.
-
-To make this easy, we can simply use curl to test the *command-side* and *query-side* applications are collaborating together as intended. A bash script has been provided to make this easy.
+To make this easy, we can simply use curl command to test that the *command-side* and *query-side* applications are collaborating together as intended. A bash script has been provided to make this straightforward. This script assumes Mac OS X, but with a small mod you can use it on Linux too.
 
 ````bash
 $ ./addProductToCatalog.sh
 ````
 
-This script creates a **New Product Command** (a JSON string) and then uses the `/add` endpoint to POST the command to the *command-side* of the application. The script then queries the "all products" endpoint (`/products`) on the *query-side* of the application to check that the new Product we added is listed. This is not guarenteed to happen instantly (this is called "eventual consistency"), so you may need to be patient between requests.
+This script POST's a **New Product Command** (a JSON string) to the *command-side* application's `/add`. The script then queries the *query-side* application's "all products" endpoint (`/products`) to check that the new Product we added is in the list. 
 
+> Note: This is not guarenteed to happen instantly (often termed "eventual consistency"), so you may need to be patient between your POST and GET requests. One second should normally do it.
 
 # How Does It Work?
 
 Following our first `curl` command (to the command side)...
 
-1. The command will have been received by the command-side and processed by a new *AggregateRoot*. 
-2. The Aggregate would have emitted an *Event*
-3. The Event would have been data stored in the *Event Store* (which uses MySQL)
-4. The events emitted would have been published to 'out of process' listeners (using RabbitMQ).
-5. The query-side *Listener* would have reacted to the event, storing a new Product in it's product view.
+1. The command is received by the command-side and then processed by Axon using a new *AggregateRoot* (the term *AggregateRoot* comes from Domain Driven Design, for which CQRS and Event Sourcing are an excellent match!). 
+
+2. The AggregateRoot performs the command and then emits an *Event*.
+
+3. The Event is stored in the *Event Store* (which uses MySQL) anf then gets published to 'out of process' listeners (using RabbitMQ).
+
+4. The query-side *Listener* receives the event and stores a new Product in it's Product view table (also in MySQL, but in a completely seperate Table, Schema and even DB if desired).
 
 Following our second `curl` command (to the query-side)...
 
 1. The Product view would have been queried for a list of products to display.
+
+2. The list of Procuct are sent back to the caller in JSON format.
+
+> Note: Spring Data REST Repositories are being used for the query-side implmentation, so you'll find very little boilerplate code in that part of the project.
 
 
 # Running locally using PCF-Dev
@@ -92,8 +104,27 @@ Other than these points, the instructions are broadly the same.
 
 # Bonus Material
 
-Concourse
+Want to know [what Greg Young thinks of Axon?](https://www.infoq.com/presentations/event-sourcing-jvm)
+
+Want an automated build? - This project includes a simple continuous delivery pipeline that uses [Concourse](http://concourse.ci/). The Concourse pipeline can be found in the `ci` folder. To use it, you'll need a [Concourse server](http://concourse.ci/), and the associated `fly` cli tool. When pushing the pipeline you'll also need a second file with your private config as follows...
+
+````yml
+cf-cmd-app-url: <your command-side app URL>
+cf-qry-app-url: <your query-side app URL>
+cf-endpoint: <your cf-api endpoint>
+cf-user: <your cf username>
+cf-password: <your cf password>
+cf-org: <your cf org name>
+cf-space: <your cf space name>
+skip-ssl: <whther you should login with ssl (true|false)>
+````
 
 # Credits
 
-Aurora
+[Ben Wilcock](https://benwilcock.wordpress.com) - code.
+
+[Aurora Mirea](https://github.com/auramirea) - code.
+
+[Josh Long](https://twitter.com/starbuxman) - webinar.
+
+[Allard Buijze](https://twitter.com/allardbz) - webinar.

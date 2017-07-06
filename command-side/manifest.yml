@@ -4,7 +4,7 @@ applications:
   memory: 1G
   timeout: 120
   services:
-    - eventStore
+    - mysql
     - rabbit
     - config
     - registry

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# For Linux use uuid, for Mac OS use uuidgen...
 #export UUID=`uuid`
 export UUID=`uuidgen`
 export cmdURL="https://pcf-axon-cqrs-demo-command-side.cfapps.io/"
