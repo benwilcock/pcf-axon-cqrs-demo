@@ -10,9 +10,15 @@ This demo project was inspired by a webinar given by [Josh Long](https://twitter
 
 > **This CQRS application contains only RESTful services and API's - no UI.**
 
+## Architecture Overview
+
+The following diagram illustrates how these microservices are architected. Notice how because we're using Event Driven Architecture, it's easy (and expected) that you would ultimately have lots of different views, projections, reports and legacy adaptors in order to help you maintain the flexibility of your microservice architecture without it turning back into a monolith.
+
+![Architecture Overview - CQRS & Event Sourcing on CloudFoundry](/images/CQRS+EventSourcing-on-CloudFoundry.png)
+
 ## Before You Begin.
 
-This demo will *only* run in a Cloud Foundry environment such as [Pivotal Web Services (PWS)](https://run.pivotal.io/) or [PCF-Dev](https://pivotal.io/pcf-dev). If you don't have a PWS account yet (why not?), [you can sign up for free](https://run.pivotal.io). If you would prefer to use PCF-Dev on your local machine rather than the cloud, read on to the end to find out what else you'll need to do.
+This demo will *only* run in a Cloud Foundry environment such as [Pivotal Web Services (PWS)](https://run.pivotal.io/) or [PCF-Dev](https://pivotal.io/pcf-dev). If you don't have a PWS account, [you can sign up for free](https://run.pivotal.io). If you would prefer to use PCF-Dev on your local machine rather than the cloud, read on to the end to find out what else you'll need to do.
 
 First things first, clone this repository and go to it's directory in your terminal window. You'll notice there is a folder for the `command-side` project and a folder for the `query-side` project. You don't have to explore these folders to run the demo, but you might like to later after you're done here.
 
@@ -26,9 +32,9 @@ To set up these marketplace services, login to CloudFoundry with your local Clou
 $ cf login -a api.run.pivotal.io
 ````
 
-When logging in, be sure to choose an 'Org' and 'Space' with ample quota.
+When logging in, you'll need your account username and password. Be sure to choose an 'Org' and 'Space' with ample quota.
 
-Now we're logged in, we can setup the supporting services required for our apps. Use the commands below to instantly self-provision services for *MySQL*, *RabbitMQ*, *Spring Cloud Registry* and *Spring Cloud Config*. Note that the Config server will need to know where to get it's config from. A setup file has been provided in the root of this project that contains [the location](https://github.com/benwilcock/app-config).
+Once you're logged in, you can setup the supporting services required for the applications. Use the commands below to instantly self-provision backing services for *MySQL*, *RabbitMQ*, *Spring Cloud Registry* and *Spring Cloud Config*. Note that the Config server will need to know where to get it's configuration files. A setup file has been provided in the root of this project that contains [the Github location of the configuration required.](https://github.com/benwilcock/app-config)
 
 ````bash
 $ cf create-service cleardb spark mysql
@@ -37,7 +43,7 @@ $ cf create-service p-service-registry standard registry
 $ cf create-service p-config-server standard config -c config-server-setup.json
 ````
 
-A quick call to `cf services` should list all four of these application services (rabbit, mysql, registry and config). These services will now be available for use by the applications in the targeted space (which is good, because the microservice applications depend on them).
+Following this step, a quick call to `cf services` should list all four of these application services you provisioned (rabbit, mysql, registry and config). These services will now be available for use by the applications in the targeted space (which is good, because the microservice applications depend on them).
 
 ## Build & Deploy The Microservices.
 
