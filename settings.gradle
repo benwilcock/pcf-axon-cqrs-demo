@@ -1,1 +1,3 @@
-include "command-side", "query-side"
+include "command-side"
+include "query-side"
+

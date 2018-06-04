@@ -1,16 +1,3 @@
-plugins {
-    id "com.gorylenko.gradle-git-properties" version "1.4.16"
-    id "io.spring.dependency-management" version "1.0.3.RELEASE"
-    id "org.springframework.boot" version "1.5.4.RELEASE"
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Dalston.SR1"
-        mavenBom "io.pivotal.spring.cloud:spring-cloud-services-dependencies:1.4.1.RELEASE"
-    }
-}
-
 jar {
     baseName = 'pcf-axon-cqrs-demo-query-side'
     archiveName = 'pcf-axon-cqrs-demo-query-side.jar'
@@ -18,9 +5,9 @@ jar {
 
 dependencies {
 
-	// Spring Web
+    // Spring Web
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
-    compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
+//    compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
 
     //
     compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
@@ -40,11 +27,57 @@ dependencies {
     compile("org.axonframework:axon-spring-boot-starter:${axonVersion}")
     compile("org.axonframework:axon-amqp:${axonVersion}")
 
-	// Test
-	testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+    // Test
+    testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
     testCompile("com.h2database:h2")
 }
 
 springBoot  {
     buildInfo()
 }
+
+//plugins {
+//    id "com.gorylenko.gradle-git-properties" version "1.4.16"
+//    id "io.spring.dependency-management" version "1.0.3.RELEASE"
+//    id "org.springframework.boot" version "1.5.4.RELEASE"
+//}
+//
+//dependencyManagement {
+//    imports {
+//        mavenBom "org.springframework.cloud:spring-cloud-dependencies:Dalston.SR1"
+//        mavenBom "io.pivotal.spring.cloud:spring-cloud-services-dependencies:1.4.1.RELEASE"
+//    }
+//}
+//
+//dependencies {
+//
+//	// Spring Web
+//    compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+//    compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
+//
+//    //
+//    compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
+//    compile("org.springframework.boot:spring-boot-starter-data-rest:${springBootVersion}")
+//
+//    // Messaging
+//    compile("org.springframework.boot:spring-boot-starter-amqp:${springBootVersion}")
+//
+//    // Spring Cloud
+//    compile("io.pivotal.spring.cloud:spring-cloud-services-starter-config-client")
+//    compile("io.pivotal.spring.cloud:spring-cloud-services-starter-service-registry")
+////    compile("org.springframework.cloud:spring-cloud-starter-sleuth")
+////    compile("org.springframework.cloud:spring-cloud-stream-binder-rabbit")
+////    compile("org.springframework.cloud:spring-cloud-sleuth-zipkin-stream")
+//
+//    // Axon CQRS / ES Framework
+//    compile("org.axonframework:axon-spring-boot-starter:${axonVersion}")
+//    compile("org.axonframework:axon-amqp:${axonVersion}")
+//
+//	// Test
+//	testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+//    testCompile("com.h2database:h2")
+//}
+//
+//springBoot  {
+//    buildInfo()
+//}
