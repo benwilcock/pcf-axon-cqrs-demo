@@ -8,3 +8,5 @@ applications:
     - rabbit
     - config
     - registry
+  env:
+     JBP_CONFIG_DEBUG: '{enabled: true}'

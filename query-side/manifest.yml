@@ -8,3 +8,5 @@ applications:
     - config
     - registry
     - mysql
+  env:
+     JBP_CONFIG_DEBUG: '{enabled: true}'
